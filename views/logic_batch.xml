@@ -111,6 +111,7 @@
                                 <field name="class_teacher_id" groups="logic_base.academic_head_batch"/>
                                 <field name="fee_collection_id" groups="logic_base.accounts_batch"/>
 <!--                                <field name="name" required="1"/>-->
+                                <field name="academic_coordinator"/>
                                 <field name="code"/>
                                 <field name="product_id" required="1"/>
                                 <field name="created_id"/>

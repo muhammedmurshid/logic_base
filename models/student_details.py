@@ -55,6 +55,32 @@ class LogicStudents(models.Model):
     day_five = fields.Selection([('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')],
                                 'Attendance')
 
+    # logic excel attendance fields
+    day_one_excel = fields.Date('Date')
+    day_one_excel_attendance = fields.Selection(
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')], 'Attendance')
+    day_two_excel = fields.Date('Date')
+    day_two_excel_attendance = fields.Selection(
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')],
+        'Attendance')
+    day_three_excel = fields.Date('Date')
+    day_three_excel_attendance = fields.Selection(
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')],
+        'Attendance')
+
+    # logic cip attendance fields
+    day_one_cip = fields.Date('Date')
+    day_one_cip_attendance = fields.Selection(
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')], 'Attendance')
+    day_two_cip = fields.Date('Date')
+    day_two_cip_attendance = fields.Selection(
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')],
+        'Attendance')
+    day_three_cip = fields.Date('Date')
+    day_three_cip_attendance = fields.Selection(
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')],
+        'Attendance')
+
     @api.model
     def create(self, vals):
         if vals.get('reference', _('New')) == _('New'):
@@ -94,25 +120,6 @@ class LogicStudents(models.Model):
                 'domain': [('batch_id.id', '=', self.batch_id.id)]
             }
 
-            # print('yes')
-            # return {
-            #     'type': 'ir.actions.act_window',
-            #     'name': 'Class',
-            #     'res_model': 'res.class',
-            #     'view_mode': 'tree',
-            #     'target': 'current',
-            #     # 'domain': [('batch_id', '=', self.batch_id)]
-            # }
-
-            # return {
-            #     'type': 'ir.actions.act_window',
-            #     'name': 'Class',
-            #     'res_model': 'res.class',
-            #     'view_mode': 'tree',
-            #     'target': 'current',
-            #     'domain': [('batch_id', '=', self.batch_id)]
-            # }
-
     def action_admission(self):
         student_name = self.env['logic.students'].sudo().create({
 
@@ -143,11 +150,6 @@ class LogicStudents(models.Model):
         return res
 
     def link_partner(self):
-        # admission = self.env['res.admission'].search([])
-        # for admsn in admission:
-        #     if admsn.crm_lead_id.id == self.stud_id:
-        #         self.adm_id = admsn.id
-        #         self.adm_no_id = admsn.id
 
         ss = self.env['res.partner'].search([])
         if not self.stud_id:
@@ -223,28 +225,6 @@ class ClassRoomallocateStudent(models.TransientModel):
         for ii in aa:
             if aa:
                 ii.line_base_ids = res
-
-        # self.env['logic.base.class'].create({
-        #     'line_base_ids': res
-        # })
-        # for student in self.student_ids:
-        #     admission = self.env['res.admission'].search([('batch_id.id', '=', self.batch_id.id)])
-        #     print('admision')
-        #     for k in admission:
-
-        #         }
-        #         print(res_list, 'list')
-        #
-        #
-        #         self.env['logic.base.class'].create({
-        #             'line_base_ids': res
-        #             # 'pending_fee': self.pending_fee
-        #         })
-        #     print(res, 'res')
-        # x.onchange_ad_id()
-        # x.update({
-
-        # })
 
 
 class UpayaAttendanceStudent(models.Model):

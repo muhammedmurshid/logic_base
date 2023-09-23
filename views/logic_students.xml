@@ -132,6 +132,38 @@
                                 </tree>
                             </field>
                         </page>
+                        <page string="Excel Attendance" name="excel">
+                            <group>
+                                <group string="Day 1">
+                                    <field name="day_one_excel"/>
+                                    <field name="day_one_excel_attendance"/>
+                                </group>
+                                <group string="Day 2">
+                                    <field name="day_two_excel"/>
+                                    <field name="day_two_excel_attendance"/>
+                                </group>
+                                <group string="Day 3">
+                                    <field name="day_three_excel"/>
+                                    <field name="day_three_excel_attendance"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="CIP Attendance" name="excel">
+                            <group>
+                                <group string="Day 1">
+                                    <field name="day_one_cip"/>
+                                    <field name="day_one_cip_attendance"/>
+                                </group>
+                                <group string="Day 2">
+                                    <field name="day_two_cip"/>
+                                    <field name="day_two_cip_attendance"/>
+                                </group>
+                                <group string="Day 3">
+                                    <field name="day_three_cip"/>
+                                    <field name="day_three_cip_attendance"/>
+                                </group>
+                            </group>
+                        </page>
                     </notebook>
 
                 </sheet>

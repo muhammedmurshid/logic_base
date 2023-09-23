@@ -27,6 +27,7 @@ class LogicBaseBathes(models.Model):
                               ('accounts', 'Accounts Approval'),
                               ('done', 'Done'),
                               ('cancel', 'Cancelled')], default='draft')
+    academic_coordinator = fields.Many2one('res.users', string="Academic Coordinator")
     from_date = fields.Date(string="Start Date", required=True)
     to_date = fields.Date(string="End Date", required=True)
     class_id = fields.Many2one('res.class', string="class")
