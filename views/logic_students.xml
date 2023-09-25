@@ -73,6 +73,18 @@
                         </group>
                     </group>
                     <notebook>
+                        <page string="Bank Details" name="bank_details">
+                            <group>
+                                <group>
+                                    <field name="bank_name"/>
+                                    <field name="ifsc_code"/>
+                                    <field name="account_number"/>
+                                    <field name="branch"/>
+                                    <field name="holder_name"/>
+                                </group>
+                            </group>
+
+                        </page>
                         <page string="Upaya Attendance" name="attribute">
                             <field name="upaya_std_ids">
                                 <tree string="Upaya Attendance" editable="bottom">

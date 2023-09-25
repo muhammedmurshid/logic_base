@@ -81,6 +81,14 @@ class LogicStudents(models.Model):
         [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')],
         'Attendance')
 
+    # students Bank details
+    bank_name = fields.Char('Bank Name')
+    account_number = fields.Char('Account Number')
+    ifsc_code = fields.Char('IFSC Code')
+    branch = fields.Char('Branch')
+    holder_name = fields.Char('Account Holder Name')
+
+
     @api.model
     def create(self, vals):
         if vals.get('reference', _('New')) == _('New'):
