@@ -58,7 +58,8 @@
                 <!--                 <field name="district_code"/> -->
                 <field name="name"/>
                 <field name="product_id"/>
-                <field name="company_id"/>
+                <field name="company_id" invisible="1"/>
+                <field name="branch_id"/>
                 <!--                 <field name="b_nm"/> -->
                 <!--                 <field name="location"/> -->
                 <field name="tot_seats"/>
@@ -119,7 +120,8 @@
                                 <field name="approve_date"/>
                             </group>
                             <group>
-                                <field name="company_id"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="branch_id"/>
                                 <field name="tot_seats"/>
 <!--                                <field name="available_seats"/>-->
                                 <field name="from_date"/>

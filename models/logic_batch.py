@@ -14,6 +14,7 @@ class LogicBaseBathes(models.Model):
     code = fields.Char(string="Batch Code", index=True)
     product_id = fields.Many2one('product.product', string="Course", index=True, required=1)
     company_id = fields.Many2one('res.company', string="Branch", default=lambda self: self.env.company.id, required=1)
+    branch_id = fields.Many2one('logic.base.branches', string="Branch")
     # location = fields.Many2one('res.company',string="Branch", index=True)
     tot_seats = fields.Integer(string="Total Seats", index=True)
     # batch_id = fields.Many2one('res.batch', string="Batch Name")

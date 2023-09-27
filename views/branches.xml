@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="model_logic_base_branches_form_view" model="ir.ui.view">
+        <field name="name">Branch</field>
+        <field name="model">logic.base.branches</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="One to One Meeting">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="branch_name"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="base_branches_tree_view" model="ir.ui.view">
+        <field name="name">Branches</field>
+        <field name="model">logic.base.branches</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="branch_name"/>
+            </tree>
+
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="branches_base_action">
+        <field name="name">Branch</field>
+        <field name="res_model">logic.base.branches</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Branch"
+              id="branch_main_menu"
+              action="branches_base_action"
+              parent="menu_students_base"/>
+
+
+</odoo>

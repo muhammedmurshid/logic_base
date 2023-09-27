@@ -10,7 +10,8 @@
         'views/logic_batch.xml',
         'views/class_logic.xml',
         'views/stud_allocation.xml',
-        'views/logic_courses.xml'
+        'views/logic_courses.xml',
+        'views/branches.xml'
 
     ],
     'demo': [],

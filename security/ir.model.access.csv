@@ -10,6 +10,8 @@ access_courses,access_course,model_logic_base_courses,base.group_user,1,1,1,1
 access_upaya_attendance,access_course,model_students_attendance_upaya,base.group_user,1,1,1,1
 access_yes_plus_attendance,access_course,model_students_attendance_yes_plus,base.group_user,1,1,1,1
 access_yes_plus_attendance_std,access_course,model_bring_buddy_students_attendance,base.group_user,1,1,1,1
+base_branch,access_details_branch,model_logic_base_branches,base.group_user,1,1,1,1
+
 
 
 
