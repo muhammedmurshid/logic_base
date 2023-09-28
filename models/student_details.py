@@ -42,12 +42,11 @@ class LogicStudents(models.Model):
     # logic yes plus fields
 
     day_one_date = fields.Date('Date')
-    day_one = fields.Selection([('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')], 'Attendance')
+    day_one = fields.Selection([('present', 'Present'), ('absent', 'Absent')], 'Attendance')
     day_two_date = fields.Date('Date')
-    day_two = fields.Selection([('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')], 'Attendance')
+    day_two = fields.Selection([('present', 'Present'), ('absent', 'Absent')], 'Attendance')
     day_three_date = fields.Date('Date')
-    day_three = fields.Selection([('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')],
-                                 'Attendance')
+    day_three = fields.Selection([('present', 'Present'), ('absent', 'Absent')], 'Attendance')
     day_four_date = fields.Date('Date')
     day_four = fields.Selection([('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')],
                                 'Attendance')
