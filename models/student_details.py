@@ -19,7 +19,7 @@ class LogicStudents(models.Model):
     father_number = fields.Char(string='Father Number')
     mother_name = fields.Char(string='Mother Name')
     mother_number = fields.Char(string='Mother Number')
-    course_studied = fields.Char(string='Course studied')
+    course_studied = fields.Char(string='Course Studied')
     last_institute_studied = fields.Char(string='Last Institute Studied')
     mode_of_study = fields.Selection([('online', 'Online'), ('offline', 'Offline')], string='Mode of Study')
     street = fields.Char()
@@ -176,6 +176,27 @@ class LogicStudents(models.Model):
                 print('ll')
         # else:
         #     raise UserError('Students do not match')
+
+    def action_open_exam_results(self):
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Exam Results',
+                'res_model': 'logic.student.result',
+                'view_mode': 'tree',
+                'target': 'current',
+                'domain': [('student_id', '=', self.id)],
+            }
+    
+    def action_open_student_attendances(self):
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Attendances',
+                'res_model': 'student.attendance',
+                'view_mode': 'tree',
+                'target': 'current',
+                'domain': [('student_id', '=', self.id)],
+                'context' : {'search_default_class_id': 1}
+            }
 
     def return_draft(self):
         self.status = 'draft'
