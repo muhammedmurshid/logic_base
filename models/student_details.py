@@ -19,7 +19,7 @@ class LogicStudents(models.Model):
     father_number = fields.Char(string='Father Number')
     mother_name = fields.Char(string='Mother Name')
     mother_number = fields.Char(string='Mother Number')
-    course_studied = fields.Char(string='Course Studied')
+    course_studied = fields.Char(string='Course studied')
     last_institute_studied = fields.Char(string='Last Institute Studied')
     mode_of_study = fields.Selection([('online', 'Online'), ('offline', 'Offline')], string='Mode of Study')
     street = fields.Char()
