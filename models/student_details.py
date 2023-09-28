@@ -176,6 +176,27 @@ class LogicStudents(models.Model):
         # else:
         #     raise UserError('Students do not match')
 
+    def action_open_exam_results(self):
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Exam Results',
+                'res_model': 'logic.student.result',
+                'view_mode': 'tree',
+                'target': 'current',
+                'domain': [('student_id', '=', self.id)],
+            }
+    
+    def action_open_student_attendances(self):
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Attendances',
+                'res_model': 'student.attendance',
+                'view_mode': 'tree',
+                'target': 'current',
+                'domain': [('student_id', '=', self.id)],
+                'context' : {'search_default_class_id': 1}
+            }
+
     def return_draft(self):
         self.status = 'draft'
 

@@ -27,6 +27,18 @@
                                 <span class="o_stat_text">Class</span>
                             </div>
                         </button>
+
+                        <button name="action_open_exam_results" type="object" class="oe_stat_button" icon="fa-book">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Exams</span>
+                            </div>
+                        </button>
+
+                        <button name="action_open_student_attendances" type="object" class="oe_stat_button" icon="fa-wpforms">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Attendances</span>
+                            </div>
+                        </button>
                     </div>
 
                     <div class="oe_title oe_left">
@@ -41,7 +53,7 @@
                             <field name="phone_number"/>
                             <field name="student_id"/>
                             <field name="aadhar_number"/>
-                            <field name="batch_id"/>
+                            <field name="batch_id" />
                             <field name="stud_id" invisible="1"/>
                             <field name="related_partner"/>
                             <!--                            <field name="adm_no_id"/>-->

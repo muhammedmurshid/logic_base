@@ -41,6 +41,20 @@ class LogicBaseBathes(models.Model):
     class_teacher_id = fields.Many2one('hr.employee', string="Class Teacher")
     fee_collection_id = fields.Many2one('hr.employee', string="Fee Collector")
 
+    def name_get(self):
+        result = []
+        for record in self:
+            if not self.env.context.get('custom_name_display'):
+                result.append((record.id,record.name))
+            else:
+                students_count = self.env['logic.students'].search_count([('batch_id','=',record.id)])
+                if students_count==1:
+                    text = 'Student'
+                else:
+                    text = 'Students'
+                result.append((record.id, f'{record.name} ({students_count} {text})'))
+        return result
+    
     @api.depends('make_visible_head_batch')
     def get_batch_head(self):
         print('kkkll')
