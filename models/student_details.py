@@ -7,9 +7,12 @@ class LogicStudents(models.Model):
     _inherit = 'mail.thread'
 
     name = fields.Char(string='Name', copy=False, required=True)
+    dob = fields.Date(string="Date of Birth")
     email = fields.Char(string='Email address')
-    phone_number = fields.Char(string='Mobile number')
+    phone_number = fields.Char(string='Mobile No')
+    whatsapp_no = fields.Char(string="Whatsapp No")
     admission_fee = fields.Float(string='Admission fee')
+    admission_no = fields.Char(string="Admission No")
     reference = fields.Char(string="Name", readonly=True,
                             copy=False, default=lambda self: 'Adv/')
     student_id = fields.Char(string='Student ID')
@@ -19,6 +22,8 @@ class LogicStudents(models.Model):
     father_number = fields.Char(string='Father Number')
     mother_name = fields.Char(string='Mother Name')
     mother_number = fields.Char(string='Mother Number')
+    parent_whatsapp = fields.Char(string='Parent Whatsapp')
+    parent_email = fields.Char(string="Parent Email")
     course_studied = fields.Char(string='Course Studied')
     last_institute_studied = fields.Char(string='Last Institute Studied')
     mode_of_study = fields.Selection([('online', 'Online'), ('offline', 'Offline')], string='Mode of Study')
