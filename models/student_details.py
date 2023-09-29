@@ -13,7 +13,7 @@ class LogicStudents(models.Model):
     whatsapp_no = fields.Char(string="Whatsapp No")
     admission_fee = fields.Float(string='Admission fee')
     admission_no = fields.Char(string="Admission No")
-    reference = fields.Char(string="Name", readonly=True,
+    reference = fields.Char(string="Reference", readonly=True,
                             copy=False, default=lambda self: 'Adv/')
     student_id = fields.Char(string='Student ID')
     aadhar_number = fields.Char(string='Aadhar Number')
@@ -217,47 +217,103 @@ class ClassRoomallocateStudent(models.TransientModel):
     _name = 'class.base.allocate.student'
     _description = 'Allocate students to class room'
 
-    batch_id = fields.Many2one('logic.base.batch', string="Batch")
+    batch_id = fields.Many2one('logic.base.batch', string="Batch",readonly=True)
+    
+    @api.onchange('batch_id')
+    def get_students_domain(self):
+        already_allocated_stud_ids = []
+        for stud_line in self.class_id.line_base_ids:
+            already_allocated_stud_ids.append(stud_line.student_id.id)
+        return {'domain': {'student_ids': [('batch_id','=',self.batch_id.id),('id','not in',already_allocated_stud_ids)]}}
+
+        # return [('id','not in',already_allocated_stud_ids),('batch_id','=',self.batch_id.id)]
     student_ids = fields.Many2many('logic.students', string="Students", copy=True)
     # admission_ids = fields.Many2many('res.admission', string="Admision")
-    class_id = fields.Many2one('logic.base.class', string="Class")
-
-    @api.onchange('batch_id')
-    def onchange_batch_id(self):
-        dd = self.env['logic.students'].search([('batch_id.id', '=', self.batch_id.id)])
-        # self.student_ids = dd
-        return {'domain': {'student_ids': [('batch_id.id', 'in', dd.mapped('batch_id').ids)]}}
+    class_id = fields.Many2one('logic.base.class', string="Class",readonly=True)
 
     def action_allocation(self):
-        adc = self.env['logic.students'].search([])
-        admission = self.env['res.admission'].search([])
-        print('hhi')
-        # print(self.student_ids)
-        res = []
-        adm = []
-        for i in self:
-            for j in i.student_ids:
-                if j.id in adc.ids:
-                    aad = self.env['logic.students'].search([('id', '=', j.id)])
-                    aad.class_id = self.class_id
-                    print(aad, 'ye')
-                else:
-                    print('no')
 
-                res_list = {
-                    'student_id': j.id,
-                    # 'class_base_id': i.class_id.id,
-                    'batch_id': self.batch_id.id,
-                    # 'pending_fee': 100,
-                    # 'ad_id': j.adm_id,
-                }
-                res.append((0, 0, res_list))
-        print(adm, 'admission')
-        aa = self.env['logic.base.class'].search([('id', '=', self.class_id.id)])
-        print(res, 'res')
-        for ii in aa:
-            if aa:
-                ii.line_base_ids = res
+        for student in self.student_ids:
+            student_line = self.env['student.base.lines'].create({
+                'class_base_id' : self.class_id.id,
+                'student_id': student.id,
+                'batch_id': self.batch_id.id,
+
+            })
+            self.class_id.write({
+                'line_base_ids': [(4,student_line.id)]
+            })
+
+class ReallocateBase(models.TransientModel):
+    _name = "classroom.base.reallocate.student"
+
+    batch_id = fields.Many2one('logic.base.batch', string="Batch")
+    student_ids = fields.Many2many('logic.students', string="Students")
+    # admission_ids = fields.Many2many('res.admission', string="Admision")
+    allocate_class_id = fields.Many2one('logic.base.class', string="Allocate to Class",required=True)
+    current_class_id = fields.Many2one('logic.base.class',domain="[('batch_id','=',batch_id)]",string="Current Class",required=True)
+
+    @api.onchange('batch_id')
+    def get_students_domain(self):
+        already_allocated_stud_ids = []
+        for stud_line in self.current_class_id.line_base_ids:
+            already_allocated_stud_ids.append(stud_line.student_id.id)
+        return {'domain': {'student_ids': [('id','in',already_allocated_stud_ids)]}}
+    
+
+    def action_reallocation(self):
+        for student in self.student_ids:
+            allocated_student_line = self.env['student.base.lines'].search([('class_base_id','=',self.current_class_id.id),('student_id','=',student.id)])
+            allocated_student_line.unlink()
+            new_student_line = self.env['student.base.lines'].create({
+                'class_base_id' : self.allocate_class_id.id,
+                'student_id': student.id,
+                'batch_id': self.batch_id.id,
+            })
+            self.allocate_class_id.write({
+                'line_base_ids': [(4,new_student_line.id)]
+            })
+
+
+
+
+
+    # @api.onchange('batch_id')
+    # def onchange_batch_id(self):
+    #     dd = self.env['logic.students'].search([('batch_id.id', '=', self.batch_id.id)])
+    #     # self.student_ids = dd
+    #     return {'domain': {'student_ids': [('batch_id.id', 'in', dd.mapped('batch_id').ids)]}}
+
+
+        # adc = self.env['logic.students'].search([])
+        # admission = self.env['res.admission'].search([])
+        # print('hhi')
+        # # print(self.student_ids)
+        # res = []
+        # adm = []
+        # for i in self:
+        #     for j in i.student_ids:
+        #         if j.id in adc.ids:
+        #             aad = self.env['logic.students'].search([('id', '=', j.id)])
+        #             aad.class_id = self.class_id
+        #             print(aad, 'ye')
+        #         else:
+        #             print('no')
+
+        #         res_list = {
+        #             'student_id': j.id,
+        #             # 'class_base_id': i.class_id.id,
+        #             'batch_id': self.batch_id.id,
+        #             # 'pending_fee': 100,
+        #             # 'ad_id': j.adm_id,
+        #         }
+        #         res.append((0, 0, res_list))
+        # print(adm, 'admission')
+        # aa = self.env['logic.base.class'].search([('id', '=', self.class_id.id)])
+        # print(res, 'res')
+        # for ii in aa:
+        #     if aa:
+        #         ii.line_base_ids = res
 
 
 class UpayaAttendanceStudent(models.Model):

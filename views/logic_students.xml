@@ -22,11 +22,11 @@
                                 <span class="o_stat_text">Admission</span>
                             </div>
                         </button>
-                        <button name="action_open_class_custom" type="object" class="oe_stat_button" icon="fa-group">
+                        <!-- <button name="action_open_class_custom" type="object" class="oe_stat_button" icon="fa-group">
                             <div class="o_stat_info">
                                 <span class="o_stat_text">Class</span>
                             </div>
-                        </button>
+                        </button> -->
 
                         <button name="action_open_exam_results" type="object" class="oe_stat_button" icon="fa-book">
                             <div class="o_stat_info">
@@ -209,11 +209,11 @@
         <field name="model">logic.students</field>
         <field name="priority" eval="100"/>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_mobile" default_group_by="status" archivable="false"
+            <kanban class="o_kanban_mobile" default_group_by="batch_id" archivable="false"
                     sample="1">
                 <field name="name"/>
                 <field name="status" readonly="1"/>
-                <field name="batch_id" invisible="1"/>
+                <field name="batch_id" readonly="1" invisible="1"/>
                 <!--                <progressbar field="status"-->
                 <!--                             colors='{"paid": "success", "head_assign": "warning", "reject": "danger", "manager": "info", "accounts": "Secondary", "cancelled": "danger"}'/>-->
                 <templates>
@@ -229,7 +229,7 @@
                             </div>
                             <div class="oe_kanban_bottom_left text-muted">
                                 <span>Batch:</span>
-                                <field name="batch_id"/>
+                                <field name="batch_id" readonly="1"/>
                             </div>
                             <div class="oe_kanban_bottom_left text-muted">
                                 <span>Student ID:</span>
@@ -249,6 +249,7 @@
             <tree>
                 <field name="reference"/>
                 <field name="name"/>
+                <field name="admission_no"/>
                 <field name="email"/>
                 <field name="phone_number"/>
             </tree>

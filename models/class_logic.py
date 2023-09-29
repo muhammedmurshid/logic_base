@@ -17,7 +17,7 @@ class ClassMaster(models.Model):
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company.id)
     date = fields.Date(string="Date", index=True)
     batch_id = fields.Many2one('logic.base.batch', string="Batch Name")
-    line_base_ids = fields.One2many('student.base.lines', 'class_base_id', string='Fee Details')
+    line_base_ids = fields.One2many('student.base.lines', 'class_base_id', string='Students')
     name = fields.Char(string="Class Room", index=True)
     code = fields.Char(string="Code", index=True)
     note = fields.Text(string='Notes')
@@ -107,22 +107,25 @@ class ClassMaster(models.Model):
                 # 'default_no_person': self.no_of_persons_package,
             },
         }
+    
+    def action_reallocation(self):
+        print('te')
+        return {
+            'name': _('Reallocation'),
+            'view_mode': 'form',
+            'res_model': 'classroom.base.reallocate.student',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            "context": {
+                'default_current_class_id': self.id,
+                'default_batch_id': self.batch_id.id,
+                # 'default_student_ids': self.student_id.id,
+                # 'default_revenue': self.expected_revenue,
+                # 'default_no_person': self.no_of_persons_package,
+            },
+        }
     #
 
-    def action_reallocate(self):
-        print("k")
-        # return {
-        #     'name': _('Reallocation'),
-        #     'view_mode': 'form',
-        #     'res_model': 'classroom.base.reallocate.student',
-        #     'type': 'ir.actions.act_window',
-        #     'target': 'new',
-        #     "context": {
-        #         'default_class_id': self.id,
-        #         'default_batch_id': self.batch_id.id,
-        #         # 'default_student_ids': self.student_id.id,
-        #     },
-        # }
 
 
 class StudentLines(models.Model):
@@ -147,36 +150,3 @@ class StudentLines(models.Model):
     #             i.pending_fee = i.admission_id.balance
 
 
-class ReallocateBase(models.TransientModel):
-    _name = "classroom.base.reallocate.student"
-
-    batch_id = fields.Many2one('logic.base.batch', string="Batch")
-    student_ids = fields.Many2many('logic.students', string="Students")
-    # admission_ids = fields.Many2many('res.admission', string="Admision")
-    class_id = fields.Many2one('logic.base.class', string="Class")
-
-    @api.onchange('class_id')
-    def onchange_class_id(self):
-        print('nnnnn', self.class_id)
-        if self.class_id:
-            for classes in self.class_id:
-                reallocation_list = []
-                for allocation in classes.line_base_ids:
-                    reallocation_list.append(allocation.student_id.id)
-                    print(reallocation_list)
-                return {'domain': {'student_ids': [('id', 'in', reallocation_list)]}}
-
-    def classroom_reallocate_student_action(self):
-        move_id = self.to_class_id
-        from_id = self.class_id
-        for student in self.student_ids:
-            move_id.write({
-                'line_ids': [(0, 0, {
-                    'student_id': student.id
-                })]
-            })
-            from_id = self.class_id
-            for student in self.student_ids:
-                for x in from_id.line_ids:
-                    if x.student_id.id == student.id:
-                        x.unlink()

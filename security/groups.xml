@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <data noupdate="1">
+    <data noupdate="0">
         <record model="ir.module.category" id="module_batch_management">
             <field name="name">Batch</field>
             <field name="sequence">20</field>
@@ -16,6 +16,10 @@
         </record>
         <record id="academic_head_batch" model="res.groups">
             <field name="name">Academic Head</field>
+            <field name="category_id" ref="module_batch_management"/>
+        </record>
+        <record id="academic_coordinator" model="res.groups">
+            <field name="name">Coordinator</field>
             <field name="category_id" ref="module_batch_management"/>
         </record>
 

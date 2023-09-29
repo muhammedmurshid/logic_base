@@ -9,13 +9,18 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="student_ids" options="{'no_create': True}" widget="many2many_tags"/>
                                 <field name="class_id" domain="[('batch_id', '=', batch_id)]"/>
                             </group>
                             <group>
                                 <field name="batch_id"/>
                                 <!--                                <field name="admission_ids" options="{'no_create': True}" widget="many2many_tags"/>-->
                             </group>
+                            <field name="student_ids" options="{'no_create': True}">
+                                <tree>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+
                         </group>
                         <footer>
                             <button name="action_allocation" string="Allocate" type="object"
@@ -27,7 +32,7 @@
             </field>
         </record>
         <record id="classroom_allocate_student_action_id" model="ir.actions.act_window">
-            <field name="name">Conversion Ratio Report</field>
+            <field name="name">Class Allocate</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">class.base.allocate.student</field>
             <field name="view_mode">form</field>
@@ -42,16 +47,21 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="student_ids" options="{'no_create': True}" widget="many2many_tags"/>
                                 <field name="batch_id"/>
                             </group>
                             <group>
-                                <field name="class_id"/>
+                                <field name="current_class_id" readonly="1"/>
+                                <field name="allocate_class_id" domain="[('batch_id','=',batch_id),('id','!=',current_class_id)]"/>
 <!--                                <field name="to_class_id"/>-->
                             </group>
+                            <field name="student_ids" options="{'no_create': True}">
+                                <tree>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
                         </group>
                         <footer>
-                            <button name="classroom_reallocate_student_action" string="Reallocate" type="object"
+                            <button name="action_reallocation" string="Reallocate" type="object"
                                     class="btn-primary"/>
                             <button string="Cancel" class="btn-secondary" special="cancel"/>
                         </footer>
@@ -59,8 +69,8 @@
                 </form>
             </field>
         </record>
-        <record id="classroom__re_student_action_id" model="ir.actions.act_window">
-            <field name="name">Conversion Ratio Report</field>
+        <record id="classroom_reallocate_student_action_id" model="ir.actions.act_window">
+            <field name="name">Class Reallocate</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">classroom.base.reallocate.student</field>
             <field name="view_mode">form</field>

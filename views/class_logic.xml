@@ -20,6 +20,8 @@
                 <!--                <field name="date" invisible="1"/>-->
                 <!--                <field name="batch_id"/>-->
                 <field name="name"/>
+                <field name="tutor_id"/>
+                <field name="coordinator_id"/>
                 <!--                <field name="code"/>-->
                 <!--                <field name="tutor_id"/>-->
                 <!--                <field name="start_date"/>-->
@@ -46,6 +48,8 @@
                             states="draft"
                             type="object"/>
                     <button name="action_allocation" string="Student Allocation" class="btn-primary" states="active"
+                            type="object"/>
+                    <button name="action_reallocation" string="Student Reallocation" class="btn-primary" states="active"
                             type="object"/>
 <!--                    <button name="action_reallocate" string="Reallocation" class="btn-primary" states="active"-->
 <!--                            type="object"/>-->
@@ -95,28 +99,18 @@
                         </group>
                     </group>
                     <notebook>
+
+                        <page string="Student Details" name="Students" invisible="0">
+                            <field name="line_base_ids" options="{'no_create_edit': True}">
+                                <tree>
+                                    <field name="student_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
                         <page string="Remarks">
                             <group>
                                 <field name="note"/>
                             </group>
-                        </page>
-                        <page string="Student Details" name="Students" invisible="0">
-                            <field name="line_base_ids">
-                                <tree editable="bottom">
-                                    <field name="student_id" readonly="1"/>
-                                    <field name="batch_id" invisible="1"/>
-<!--                                    <field name="admission_id" readonly="1"/>-->
-<!--                                    <field name="pending_fee"/>-->
-                                    <!--                                    <field name="state" readonly="1"/>-->
-                                </tree>
-                            </field>
-<!--                            <group class="oe_total_footer oe_right" name="payment_total">-->
-<!--                                <h1>-->
-<!--                                    <group>-->
-<!--&lt;!&ndash;                                        <field name="balance" readonly="1" force_save="1"/>&ndash;&gt;-->
-<!--                                    </group>-->
-<!--                                </h1>-->
-<!--                            </group>-->
                         </page>
                     </notebook>
                 </sheet>
@@ -167,7 +161,7 @@
         </field>
     </record>
     <record id="res_class_action" model="ir.actions.act_window">
-        <field name="name">Class master</field>
+        <field name="name">Class</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">logic.base.class</field>
         <field name="view_mode">kanban,tree,form,pivot</field>
