@@ -247,7 +247,7 @@
         <field name="model">logic.students</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="reference"/>
+                <!-- <field name="reference"/> -->
                 <field name="name"/>
                 <field name="admission_no"/>
                 <field name="email"/>
