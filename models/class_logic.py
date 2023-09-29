@@ -30,7 +30,7 @@ class ClassMaster(models.Model):
     coordinator_id = fields.Many2one('res.users', string="Academic Cordinator", default=lambda self: self.env.user.id)
     approve_id = fields.Many2one('res.users', string="Approved By", default=lambda self: self.env.user.id, readonly="1",
                                  tracking=True)
-    tutor_id = fields.Many2one('res.users', string="Faculty")
+    tutor_id = fields.Many2one('res.users', string="Faculty",domain=[('faculty_check','=',True)])
     tot_seats = fields.Integer(string="Total Seats", index=True)
     student_id = fields.Many2one('res.partner', string="Student")
     total_seats = fields.Integer(string="Total Seats")
