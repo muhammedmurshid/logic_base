@@ -114,7 +114,7 @@
 <!--                                <field name="name" required="1"/>-->
                                 <field name="academic_coordinator"/>
                                 <field name="code"/>
-                                <field name="product_id" required="1"/>
+                                <field name="product_id"/>
                                 <field name="created_id"/>
                                 <field name="create_date"/>
                                 <field name="approve_date"/>
@@ -133,6 +133,17 @@
                             </group>
                         </group>
                     </div>
+                    <notebook>
+                        <page string="Classes">
+                            <field name="class_ids" options="{'no_create_edit':True}">
+                                <tree create="0" delete="0" edit="0">
+                                    <field name="name"/>
+                                    <field name="tutor_id"/>
+                                    <field name="coordinator_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>

@@ -5,7 +5,6 @@ from odoo.exceptions import UserError
 class LogicStudents(models.Model):
     _name = 'logic.students'
     _inherit = 'mail.thread'
-
     name = fields.Char(string='Name', copy=False, required=True)
     dob = fields.Date(string="Date of Birth")
     email = fields.Char(string='Email address')
@@ -222,8 +221,9 @@ class ClassRoomallocateStudent(models.TransientModel):
     @api.onchange('batch_id')
     def get_students_domain(self):
         already_allocated_stud_ids = []
-        for stud_line in self.class_id.line_base_ids:
-            already_allocated_stud_ids.append(stud_line.student_id.id)
+        for class_id in self.batch_id.class_ids: 
+            for stud_line in class_id.line_base_ids:
+                already_allocated_stud_ids.append(stud_line.student_id.id)
         return {'domain': {'student_ids': [('batch_id','=',self.batch_id.id),('id','not in',already_allocated_stud_ids)]}}
 
         # return [('id','not in',already_allocated_stud_ids),('batch_id','=',self.batch_id.id)]

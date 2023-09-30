@@ -12,8 +12,8 @@ class LogicBaseBathes(models.Model):
 
     name = fields.Char(string="Batch Name", index=True, required=1)
     code = fields.Char(string="Batch Code", index=True)
-    product_id = fields.Many2one('product.product', string="Course", index=True, required=1)
-    company_id = fields.Many2one('res.company', string="Branch", default=lambda self: self.env.company.id, required=1)
+    product_id = fields.Many2one('product.product', string="Course", index=True)
+    company_id = fields.Many2one('res.company', string="Branch", default=lambda self: self.env.company.id)
     branch_id = fields.Many2one('logic.base.branches', string="Branch")
     # location = fields.Many2one('res.company',string="Branch", index=True)
     tot_seats = fields.Integer(string="Total Seats", index=True)
@@ -29,9 +29,10 @@ class LogicBaseBathes(models.Model):
                               ('done', 'Done'),
                               ('cancel', 'Cancelled')], default='draft')
     academic_coordinator = fields.Many2one('res.users', string="Academic Coordinator")
-    from_date = fields.Date(string="Start Date", required=True)
-    to_date = fields.Date(string="End Date", required=True)
+    from_date = fields.Date(string="Start Date",)
+    to_date = fields.Date(string="End Date",)
     class_id = fields.Many2one('res.class', string="class")
+    class_ids = fields.One2many("logic.base.class","batch_id",string="Classes")
     adm_id = fields.Many2one('res.admission', string="Admission")
     message_ids = fields.One2many('mail.message', 'res_id', string="Messages")
     create_date = fields.Datetime(string="Create Date", tracking=True, default=date.today())

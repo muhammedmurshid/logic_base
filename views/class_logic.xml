@@ -101,8 +101,8 @@
                     <notebook>
 
                         <page string="Student Details" name="Students" invisible="0">
-                            <field name="line_base_ids" options="{'no_create_edit': True}">
-                                <tree>
+                            <field name="line_base_ids" options="{'no_create': True}">
+                                <tree create="0" edit="0">
                                     <field name="student_id" readonly="1"/>
                                 </tree>
                             </field>
