@@ -78,6 +78,8 @@
                             <div class="oe_kanban_bottom_left text-muted">
                                 <span>Type:</span>
                                 <field name="type"/>
+                                <field name="active" invisible="1"/>
+
                             </div>
 
                         </div>

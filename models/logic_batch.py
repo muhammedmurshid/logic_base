@@ -10,6 +10,8 @@ class LogicBaseBathes(models.Model):
     _rec_name = 'name'
     _description = 'Batch'
 
+    active = fields.Boolean(default=True)
+
     name = fields.Char(string="Batch Name", index=True, required=1)
     code = fields.Char(string="Batch Code", index=True)
     product_id = fields.Many2one('product.product', string="Course", index=True)
@@ -27,7 +29,7 @@ class LogicBaseBathes(models.Model):
                               ('marketing', 'Manager Approval'),
                               ('accounts', 'Accounts Approval'),
                               ('done', 'Done'),
-                              ('cancel', 'Cancelled')], default='draft')
+                              ('cancel', 'Cancelled')], default='draft',string="Status")
     academic_coordinator = fields.Many2one('res.users', string="Academic Coordinator")
     from_date = fields.Date(string="Start Date",)
     to_date = fields.Date(string="End Date",)

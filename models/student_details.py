@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 class LogicStudents(models.Model):
     _name = 'logic.students'
     _inherit = 'mail.thread'
+    active = fields.Boolean(default=True)
     name = fields.Char(string='Name', copy=False, required=True)
     dob = fields.Date(string="Date of Birth")
     email = fields.Char(string='Email address')

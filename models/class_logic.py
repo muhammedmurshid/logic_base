@@ -14,6 +14,7 @@ class ClassMaster(models.Model):
     _rec_name = 'name'
     _description = 'Class'
 
+    active = fields.Boolean(default=True)
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company.id)
     date = fields.Date(string="Date", index=True)
     batch_id = fields.Many2one('logic.base.batch', string="Batch Name")
@@ -40,7 +41,16 @@ class ClassMaster(models.Model):
     balance = fields.Float(string='Pending Fee', compute='_compute_balance', store=True)
     batch_check_id = fields.Integer(string="Batch Check", compute='_compute_batch_id', store=True)
     admission_count = fields.Integer(string="Student Count", compute='_compute_student_count', readonly="1")
-
+    allocated_studs_count_display = fields.Char(string="Allocated Students",compute="_compute_allocated_studs_count_display")
+    
+    @api.depends('line_base_ids')
+    def _compute_allocated_studs_count_display(self):
+        for record in self:
+            if self.line_base_ids:
+                record.allocated_studs_count_display = str(len(record.line_base_ids)) + " / " + str(record.total_seats)
+            else:
+                record.allocated_studs_count_display = "0" / str(record.total_seats)
+    
     @api.depends('batch_id')
     def _compute_batch_id(self):
         for i in self:

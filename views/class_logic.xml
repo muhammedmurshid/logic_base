@@ -22,6 +22,7 @@
                 <field name="name"/>
                 <field name="tutor_id"/>
                 <field name="coordinator_id"/>
+                <field name="allocated_studs_count_display"/>
                 <!--                <field name="code"/>-->
                 <!--                <field name="tutor_id"/>-->
                 <!--                <field name="start_date"/>-->
@@ -87,6 +88,8 @@
                             <field name="tutor_id"/>
                             <field name="create_date" invisible="1"/>
                             <field name="approve_date" invisible="1"/>
+                            <field name="active" invisible="1"/>
+
                         </group>
                         <group>
 

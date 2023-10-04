@@ -5,7 +5,7 @@ class LogicBaseCourses(models.Model):
     _name = 'logic.base.courses'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Course'
-
+    active = fields.Boolean(default=True)
     name = fields.Char(string='Name', required=True)
     course_fee = fields.Float(string='Course Fee')
     type = fields.Selection([('indian', 'Indian'), ('international', 'International'), ('crash', 'Crash')],

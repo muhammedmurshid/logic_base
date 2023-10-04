@@ -56,6 +56,8 @@
         <field name="arch" type="xml">
             <tree string="Batch">
                 <!--                 <field name="district_code"/> -->
+                <field name="active" invisible="1"/>
+
                 <field name="name"/>
                 <field name="product_id"/>
                 <field name="company_id" invisible="1"/>
@@ -109,6 +111,8 @@
                     <div>
                         <group>
                             <group>
+                                <field name="active" invisible="1"/>
+
                                 <field name="class_teacher_id" groups="logic_base.academic_head_batch"/>
                                 <field name="fee_collection_id" groups="logic_base.accounts_batch"/>
 <!--                                <field name="name" required="1"/>-->
