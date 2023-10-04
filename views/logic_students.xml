@@ -51,6 +51,7 @@
                             <field name="active" invisible="1"/>
                             <field name="name"/>
                             <field name="dob"/>
+                            <field name="gender"/>
                             <field name="email"/>
                             <field name="phone_number"/>
                             <field name="whatsapp_no"/>

@@ -8,6 +8,7 @@ class LogicStudents(models.Model):
     active = fields.Boolean(default=True)
     name = fields.Char(string='Name', copy=False, required=True)
     dob = fields.Date(string="Date of Birth")
+    gender = fields.Selection(selection=[('male','Male'),('female','Female'),('other','Other')],string="Gender")
     email = fields.Char(string='Email address')
     phone_number = fields.Char(string='Mobile No')
     whatsapp_no = fields.Char(string="Whatsapp No")
