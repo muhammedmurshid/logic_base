@@ -89,6 +89,8 @@
                             <field name="course_studied"/>
                             <field name="last_institute_studied"/>
                             <field name="mode_of_study"/>
+                            <field name="attempt"/>
+                            <field name="recording_status"/>
                         </group>
                     </group>
                     <notebook>
