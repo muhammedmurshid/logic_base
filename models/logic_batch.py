@@ -29,18 +29,21 @@ class LogicBaseBathes(models.Model):
                               ('marketing', 'Manager Approval'),
                               ('accounts', 'Accounts Approval'),
                               ('done', 'Done'),
-                              ('cancel', 'Cancelled')], default='draft',string="Status")
+                              ('cancel', 'Cancelled')], default='draft', string="Status")
     academic_coordinator = fields.Many2one('res.users', string="Academic Coordinator")
-    from_date = fields.Date(string="Start Date",)
-    to_date = fields.Date(string="End Date",)
+    batch_window = fields.Selection(
+        [('january', 'January'), ('february', 'February'), ('march', 'March'), ('april', 'April'), ('may', 'May'),
+         ('june', 'June'), ('july', 'July'), ('august', 'August'), ('september', 'September'), ('october', 'October'),
+         ('november', 'November'), ('december', 'December')], string="Month")
+    from_date = fields.Date(string="Start Date")
+    to_date = fields.Date(string="End Date")
     class_id = fields.Many2one('res.class', string="class")
-    class_ids = fields.One2many("logic.base.class","batch_id",string="Classes")
+    class_ids = fields.One2many("logic.base.class", "batch_id", string="Classes")
     adm_id = fields.Many2one('res.admission', string="Admission")
     message_ids = fields.One2many('mail.message', 'res_id', string="Messages")
     create_date = fields.Datetime(string="Create Date", tracking=True, default=date.today())
     approve_date = fields.Date(string="Approve Date", tracking=True)
     active_state = fields.Selection([('active', 'Active'), ('inactive', 'Inactive')], string="Status", default='active')
-
     class_teacher_id = fields.Many2one('hr.employee', string="Class Teacher")
     fee_collection_id = fields.Many2one('hr.employee', string="Fee Collector")
 
@@ -48,16 +51,16 @@ class LogicBaseBathes(models.Model):
         result = []
         for record in self:
             if not self.env.context.get('custom_name_display'):
-                result.append((record.id,record.name))
+                result.append((record.id, record.name))
             else:
-                students_count = self.env['logic.students'].search_count([('batch_id','=',record.id)])
-                if students_count==1:
+                students_count = self.env['logic.students'].search_count([('batch_id', '=', record.id)])
+                if students_count == 1:
                     text = 'Student'
                 else:
                     text = 'Students'
                 result.append((record.id, f'{record.name} ({students_count} {text})'))
         return result
-    
+
     @api.depends('make_visible_head_batch')
     def get_batch_head(self):
         print('kkkll')
@@ -137,7 +140,6 @@ class LogicBaseBathes(models.Model):
             self.admission_count = 0
         # for i in admission_ids:
         #     print(len(i.batch_id), 'count')
-
 
     @api.depends('tot_seats')
     def _compute_seats(self):

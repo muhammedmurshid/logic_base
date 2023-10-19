@@ -117,6 +117,7 @@
                                 <field name="fee_collection_id" groups="logic_base.accounts_batch"/>
 <!--                                <field name="name" required="1"/>-->
                                 <field name="academic_coordinator"/>
+
                                 <field name="code"/>
                                 <field name="product_id"/>
                                 <field name="created_id"/>
@@ -130,6 +131,7 @@
 <!--                                <field name="available_seats"/>-->
                                 <field name="from_date"/>
                                 <field name="to_date"/>
+                                <field name="batch_window" string="Exam Window" required="1"/>
                                 <field name="active_state"/>
                                 <field name="make_visible_head_batch" invisible="1"/>
                                 <field name="make_visible_accounts_batch" invisible="1"/>

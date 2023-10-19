@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <form string="Students">
                 <header>
-                    <field name="status" widget="statusbar" statusbar_visible="draft,linked"/>
+                    <field name="status" widget="statusbar"/>
                     <button name="link_partner" string="Link Partner" attrs="{'invisible':[('status', '=','linked')]}"
                             type="object" class="oe_highlight"/>
                     <button name="return_draft" string="Return" attrs="{'invisible':[('status', '=','draft')]}"
@@ -20,6 +20,7 @@
                                 icon="fa-group">
                             <div class="o_stat_info">
                                 <span class="o_stat_text">Admission</span>
+
                             </div>
                         </button>
                         <!-- <button name="action_open_class_custom" type="object" class="oe_stat_button" icon="fa-group">
@@ -34,9 +35,59 @@
                             </div>
                         </button>
 
-                        <button name="action_open_student_attendances" type="object" class="oe_stat_button" icon="fa-wpforms">
+                        <button name="action_open_student_attendances" type="object" class="oe_stat_button"
+                                icon="fa-wpforms">
                             <div class="o_stat_info">
                                 <span class="o_stat_text">Attendances</span>
+                            </div>
+                        </button>
+                        <!--                        <button-->
+                        <!--                                id="hr_presence_button"-->
+                        <!--                                class="oe_stat_button"-->
+                        <!--                                disabled="1">-->
+                        <!--                            <div role="img" class="fa fa-fw fa-circle text-success o_button_icon"-->
+                        <!--                                 attrs="{'invisible': [('current_status', '!=', True)]}" aria-label="Available"-->
+                        <!--                                 string="Available"-->
+                        <!--                                 title="Available">-->
+                        <!--                                <span class="o_stat_text">-->
+                        <!--                                    Active-->
+                        <!--                                </span>-->
+                        <!--                            </div>-->
+                        <!--                            <div role="img" class="fa fa-fw fa-circle text-danger o_button_icon"-->
+                        <!--                                 attrs="{'invisible': [('current_status', '=', True)]}"-->
+                        <!--                                 string="Discontinued"-->
+                        <!--                                 aria-label="Discontinued" title="Discontinued">-->
+                        <!--&lt;!&ndash;                                <field string="Date" name="inactive_date" widget="statinfo"/>&ndash;&gt;-->
+                        <!--                                <span class="o_stat_text">-->
+                        <!--                                    Discontinued-->
+                        <!--                                    <br/>-->
+                        <!--                                    &lt;!&ndash;                                    <field name="inactive_date" widget="statinfo"/>&ndash;&gt;-->
+                        <!--                                </span>-->
+                        <!--                                &lt;!&ndash;                                <field name="inactive_date" class="o_stat_value"/>&ndash;&gt;-->
+
+                        <!--                            </div>-->
+                        <!--                        </button>-->
+                        <button
+                                id="hr_presence_button"
+                                class="oe_stat_button"
+                                disabled="1">
+                            <div role="img" class="fa fa-fw fa-circle text-success o_button_icon"
+                                 attrs="{'invisible': [('current_status', '!=', True)]}" aria-label="Available"
+                                 title="Available"/>
+                            <div role="img" class="fa fa-fw fa-circle text-danger o_button_icon"
+                                 attrs="{'invisible': [('current_status', '!=', False)]}"
+                                 aria-label="Not available" title="Not available"/>
+                            <div class="o_stat_info" attrs="{'invisible': [('current_status', '=', True)]}">
+
+                                <span class="o_stat_text">
+                                    Inactive
+                                </span>
+                                <field name="inactive_date" widget="statinfo" string=" "/>
+                            </div>
+                            <div class="o_stat_info" attrs="{'invisible': [('current_status', '=', False)]}">
+                                <span class="o_stat_text">
+                                    Active
+                                </span>
                             </div>
                         </button>
                     </div>
@@ -46,45 +97,26 @@
                             <field name="reference" class="oe_inline" readonly="1"/>
                         </h2>
                     </div>
+                    <widget name="web_ribbon" title="Discontinued" bg_color="bg-danger"
+                            attrs="{'invisible': [('status', 'in', ['draft','linked']), ('active', '=', True)]}"/>
+
                     <group>
                         <group>
                             <field name="active" invisible="1"/>
                             <field name="name"/>
-                            <field name="dob"/>
-                            <field name="gender"/>
                             <field name="email"/>
                             <field name="phone_number"/>
                             <field name="whatsapp_no"/>
-                            <field name="admission_no"/>
-                            <field name="student_id"/>
-                            <field name="aadhar_number"/>
-                            <field name="batch_id" />
                             <field name="stud_id" invisible="1"/>
-                            <field name="related_partner"/>
                             <!--                            <field name="adm_no_id"/>-->
                         </group>
                         <group>
-                            <label for="street" string="Address"/>
-                            <div class="o_address_format">
-                                <field name="street" placeholder="Street..." class="o_address_street"/>
-                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
-                                <field name="city" placeholder="City" class="o_address_city"/>
-                                <field name="state" class="o_address_state" placeholder="State"
-                                       options='{"no_open": True}'/>
-                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
-                                <field name="country" placeholder="Country" class="o_address_country"
-                                       options='{"no_open": True, "no_create": True}'/>
-                            </div>
-                            <field name="parent_name"/>
-                            <field name="parent_whatsapp"/>
-                            <field name="parent_email"/>
-                            <field name="father_name"/>
-                            <field name="father_number"/>
-                            <field name="mother_name"/>
-                            <field name="mother_number"/>
+                            <field name="batch_id"/>
+                            <field name="mode_of_study"/>
                             <field name="class_id" invisible="1"/>
                             <field name="adm_id" invisible="1"/>
                         </group>
+<<<<<<< Updated upstream
                         <group>
                             <field name="course_studied"/>
                             <field name="last_institute_studied"/>
@@ -92,8 +124,55 @@
                             <field name="attempt"/>
                             <field name="recording_status"/>
                         </group>
+=======
+
+>>>>>>> Stashed changes
                     </group>
                     <notebook>
+                        <page string="Private Information" name="information">
+                            <group>
+                                <group>
+                                    <label for="street" string="Address"/>
+                                    <div class="o_address_format">
+                                        <field name="street" placeholder="Street..." class="o_address_street"/>
+                                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                        <field name="city" placeholder="City" class="o_address_city"/>
+                                        <field name="state" class="o_address_state" placeholder="State"
+                                               options='{"no_open": True}'/>
+                                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                        <field name="country" placeholder="Country" class="o_address_country"
+                                               options='{"no_open": True, "no_create": True}'/>
+                                    </div>
+                                    <field name="parent_name"/>
+                                    <field name="parent_whatsapp"/>
+                                    <field name="parent_email"/>
+                                    <field name="father_name"/>
+                                    <field name="father_number"/>
+                                    <field name="mother_name"/>
+                                    <field name="mother_number"/>
+                                </group>
+                                <group string="Citizenship">
+                                    <field name="dob"/>
+                                    <field name="gender"/>
+                                    <field name="aadhar_number"/>
+                                </group>
+                                <group string="Current Status">
+                                    <field name="current_status"/>
+                                </group>
+                                <group string="Education">
+                                    <field name="course_studied"/>
+                                    <field name="last_institute_studied"/>
+                                </group>
+                                <group string="Status">
+                                    <field name="related_partner"/>
+                                    <field name="joining_date"/>
+                                    <field name="admission_no"/>
+                                    <field name="student_id"/>
+                                </group>
+
+                            </group>
+
+                        </page>
                         <page string="Bank Details" name="bank_details">
                             <group>
                                 <group>
@@ -256,6 +335,8 @@
                 <field name="admission_no"/>
                 <field name="email"/>
                 <field name="phone_number"/>
+                <field name="status" widget="badge" decoration-danger="status == 'discontinue'"
+                       decoration-info="status == 'draft'" decoration-success="status == 'linked'"/>
             </tree>
 
         </field>
@@ -284,6 +365,9 @@
         <field name="number_next">1</field>
         <field name="number_increment">1</field>
     </record>
+    <template id="assets_backend" name="faculty.assets_backend">
+        <script type="text/javascript" src="/faculty/static/src/js/active_widget.js"></script>
+    </template>
     <menuitem name="Logic Base" id="menu_students_base"
               action="details_student_view_form"
               web_icon="logic_base/static/description/icon.png"

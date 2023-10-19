@@ -5,10 +5,12 @@ from odoo.exceptions import UserError
 class LogicStudents(models.Model):
     _name = 'logic.students'
     _inherit = 'mail.thread'
+    _description = 'Student Profile'
+
     active = fields.Boolean(default=True)
     name = fields.Char(string='Name', copy=False, required=True)
     dob = fields.Date(string="Date of Birth")
-    gender = fields.Selection(selection=[('male','Male'),('female','Female'),('other','Other')],string="Gender")
+    gender = fields.Selection(selection=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], string="Gender")
     email = fields.Char(string='Email address')
     phone_number = fields.Char(string='Mobile No')
     whatsapp_no = fields.Char(string="Whatsapp No")
@@ -17,6 +19,7 @@ class LogicStudents(models.Model):
     reference = fields.Char(string="Reference", readonly=True,
                             copy=False, default=lambda self: 'Adv/')
     student_id = fields.Char(string='Student ID')
+    joining_date = fields.Date(string='Joining Date')
     aadhar_number = fields.Char(string='Aadhar Number')
     parent_name = fields.Char(string='Parent Name')
     father_name = fields.Char(string='Father Name')
@@ -32,6 +35,8 @@ class LogicStudents(models.Model):
     street2 = fields.Char()
     zip = fields.Char()
     city = fields.Char()
+    current_status = fields.Boolean(string='Active', default=True,
+                                    help="If this student is discontinued disable this field", widget='active_circle')
     upaya_std_ids = fields.One2many('students.attendance.upaya', 'upaya_std_id')
     bring_buddy_attendance_ids = fields.One2many('bring.buddy.students.attendance', 'bring_std_id')
     yes_plus_att_ids = fields.One2many('students.attendance.yes_plus', 'yes_attendance_id')
@@ -40,7 +45,8 @@ class LogicStudents(models.Model):
     country = fields.Many2one('res.country')
     stud_id = fields.Integer()
     batch_id = fields.Many2one('logic.base.batch', string='Batch')
-    status = fields.Selection([('draft', 'Draft'), ('linked', 'Linked')], default='draft', string='Status')
+    status = fields.Selection([('draft', 'Draft'), ('linked', 'Linked'), ('discontinue', 'Discontinued')],
+                              default='draft', string='Status', tracking=True)
     related_partner = fields.Many2one('res.partner', string='Related Partner')
     class_id = fields.Integer(string='Class')
     adm_id = fields.Integer(string='Admission ID')
@@ -92,8 +98,11 @@ class LogicStudents(models.Model):
     ifsc_code = fields.Char('IFSC Code')
     branch = fields.Char('Branch')
     holder_name = fields.Char('Account Holder Name')
+<<<<<<< Updated upstream
     attempt = fields.Selection(selection=[('first','First'),('second','Second'),('third','Third'),('fourth','Fourth')], string="Attempt")
     recording_status = fields.Selection(selection=[('recording','Recording'),('not_recording','Not Recording')], string="Recording/Not")
+=======
+>>>>>>> Stashed changes
 
     @api.model
     def create(self, vals):
@@ -184,28 +193,41 @@ class LogicStudents(models.Model):
         #     raise UserError('Students do not match')
 
     def action_open_exam_results(self):
-            return {
-                'type': 'ir.actions.act_window',
-                'name': 'Exam Results',
-                'res_model': 'logic.student.result',
-                'view_mode': 'tree',
-                'target': 'current',
-                'domain': [('student_id', '=', self.id)],
-            }
-    
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Exam Results',
+            'res_model': 'logic.student.result',
+            'view_mode': 'tree',
+            'target': 'current',
+            'domain': [('student_id', '=', self.id)],
+        }
+
     def action_open_student_attendances(self):
-            return {
-                'type': 'ir.actions.act_window',
-                'name': 'Attendances',
-                'res_model': 'student.attendance',
-                'view_mode': 'tree',
-                'target': 'current',
-                'domain': [('student_id', '=', self.id)],
-                'context' : {'search_default_class_id': 1}
-            }
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Attendances',
+            'res_model': 'student.attendance',
+            'view_mode': 'tree',
+            'target': 'current',
+            'domain': [('student_id', '=', self.id)],
+            'context': {'search_default_class_id': 1}
+        }
 
     def return_draft(self):
         self.status = 'draft'
+
+    @api.onchange('current_status')
+    def _compute_current_student_status(self):
+        for rec in self:
+            if rec.current_status == False:
+                rec.status = 'discontinue'
+                inactive_date = fields.Date.today()
+                rec.inactive_date = str(inactive_date)
+                print(rec.inactive_date, 'inactive_date')
+            else:
+                rec.status = 'draft'
+
+    inactive_date = fields.Char(string='Inactive Date')
 
 
 class StudentRelationCustom(models.Model):
@@ -219,33 +241,36 @@ class ClassRoomallocateStudent(models.TransientModel):
     _name = 'class.base.allocate.student'
     _description = 'Allocate students to class room'
 
-    batch_id = fields.Many2one('logic.base.batch', string="Batch",readonly=True)
-    
+    batch_id = fields.Many2one('logic.base.batch', string="Batch", readonly=True)
+
     @api.onchange('batch_id')
     def get_students_domain(self):
         already_allocated_stud_ids = []
-        for class_id in self.batch_id.class_ids: 
+        for class_id in self.batch_id.class_ids:
             for stud_line in class_id.line_base_ids:
                 already_allocated_stud_ids.append(stud_line.student_id.id)
-        return {'domain': {'student_ids': [('batch_id','=',self.batch_id.id),('id','not in',already_allocated_stud_ids)]}}
+        return {'domain': {
+            'student_ids': [('batch_id', '=', self.batch_id.id), ('id', 'not in', already_allocated_stud_ids)]}}
 
         # return [('id','not in',already_allocated_stud_ids),('batch_id','=',self.batch_id.id)]
+
     student_ids = fields.Many2many('logic.students', string="Students", copy=True)
     # admission_ids = fields.Many2many('res.admission', string="Admision")
-    class_id = fields.Many2one('logic.base.class', string="Class",readonly=True)
+    class_id = fields.Many2one('logic.base.class', string="Class", readonly=True)
 
     def action_allocation(self):
 
         for student in self.student_ids:
             student_line = self.env['student.base.lines'].create({
-                'class_base_id' : self.class_id.id,
+                'class_base_id': self.class_id.id,
                 'student_id': student.id,
                 'batch_id': self.batch_id.id,
 
             })
             self.class_id.write({
-                'line_base_ids': [(4,student_line.id)]
+                'line_base_ids': [(4, student_line.id)]
             })
+
 
 class ReallocateBase(models.TransientModel):
     _name = "classroom.base.reallocate.student"
@@ -253,33 +278,30 @@ class ReallocateBase(models.TransientModel):
     batch_id = fields.Many2one('logic.base.batch', string="Batch")
     student_ids = fields.Many2many('logic.students', string="Students")
     # admission_ids = fields.Many2many('res.admission', string="Admision")
-    allocate_class_id = fields.Many2one('logic.base.class', string="Allocate to Class",required=True)
-    current_class_id = fields.Many2one('logic.base.class',domain="[('batch_id','=',batch_id)]",string="Current Class",required=True)
+    allocate_class_id = fields.Many2one('logic.base.class', string="Allocate to Class", required=True)
+    current_class_id = fields.Many2one('logic.base.class', domain="[('batch_id','=',batch_id)]", string="Current Class",
+                                       required=True)
 
     @api.onchange('batch_id')
     def get_students_domain(self):
         already_allocated_stud_ids = []
         for stud_line in self.current_class_id.line_base_ids:
             already_allocated_stud_ids.append(stud_line.student_id.id)
-        return {'domain': {'student_ids': [('id','in',already_allocated_stud_ids)]}}
-    
+        return {'domain': {'student_ids': [('id', 'in', already_allocated_stud_ids)]}}
 
     def action_reallocation(self):
         for student in self.student_ids:
-            allocated_student_line = self.env['student.base.lines'].search([('class_base_id','=',self.current_class_id.id),('student_id','=',student.id)])
+            allocated_student_line = self.env['student.base.lines'].search(
+                [('class_base_id', '=', self.current_class_id.id), ('student_id', '=', student.id)])
             allocated_student_line.unlink()
             new_student_line = self.env['student.base.lines'].create({
-                'class_base_id' : self.allocate_class_id.id,
+                'class_base_id': self.allocate_class_id.id,
                 'student_id': student.id,
                 'batch_id': self.batch_id.id,
             })
             self.allocate_class_id.write({
-                'line_base_ids': [(4,new_student_line.id)]
+                'line_base_ids': [(4, new_student_line.id)]
             })
-
-
-
-
 
     # @api.onchange('batch_id')
     # def onchange_batch_id(self):
@@ -287,36 +309,35 @@ class ReallocateBase(models.TransientModel):
     #     # self.student_ids = dd
     #     return {'domain': {'student_ids': [('batch_id.id', 'in', dd.mapped('batch_id').ids)]}}
 
+    # adc = self.env['logic.students'].search([])
+    # admission = self.env['res.admission'].search([])
+    # print('hhi')
+    # # print(self.student_ids)
+    # res = []
+    # adm = []
+    # for i in self:
+    #     for j in i.student_ids:
+    #         if j.id in adc.ids:
+    #             aad = self.env['logic.students'].search([('id', '=', j.id)])
+    #             aad.class_id = self.class_id
+    #             print(aad, 'ye')
+    #         else:
+    #             print('no')
 
-        # adc = self.env['logic.students'].search([])
-        # admission = self.env['res.admission'].search([])
-        # print('hhi')
-        # # print(self.student_ids)
-        # res = []
-        # adm = []
-        # for i in self:
-        #     for j in i.student_ids:
-        #         if j.id in adc.ids:
-        #             aad = self.env['logic.students'].search([('id', '=', j.id)])
-        #             aad.class_id = self.class_id
-        #             print(aad, 'ye')
-        #         else:
-        #             print('no')
-
-        #         res_list = {
-        #             'student_id': j.id,
-        #             # 'class_base_id': i.class_id.id,
-        #             'batch_id': self.batch_id.id,
-        #             # 'pending_fee': 100,
-        #             # 'ad_id': j.adm_id,
-        #         }
-        #         res.append((0, 0, res_list))
-        # print(adm, 'admission')
-        # aa = self.env['logic.base.class'].search([('id', '=', self.class_id.id)])
-        # print(res, 'res')
-        # for ii in aa:
-        #     if aa:
-        #         ii.line_base_ids = res
+    #         res_list = {
+    #             'student_id': j.id,
+    #             # 'class_base_id': i.class_id.id,
+    #             'batch_id': self.batch_id.id,
+    #             # 'pending_fee': 100,
+    #             # 'ad_id': j.adm_id,
+    #         }
+    #         res.append((0, 0, res_list))
+    # print(adm, 'admission')
+    # aa = self.env['logic.base.class'].search([('id', '=', self.class_id.id)])
+    # print(res, 'res')
+    # for ii in aa:
+    #     if aa:
+    #         ii.line_base_ids = res
 
 
 class UpayaAttendanceStudent(models.Model):
