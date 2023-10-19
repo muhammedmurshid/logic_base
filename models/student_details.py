@@ -98,11 +98,8 @@ class LogicStudents(models.Model):
     ifsc_code = fields.Char('IFSC Code')
     branch = fields.Char('Branch')
     holder_name = fields.Char('Account Holder Name')
-<<<<<<< Updated upstream
     attempt = fields.Selection(selection=[('first','First'),('second','Second'),('third','Third'),('fourth','Fourth')], string="Attempt")
     recording_status = fields.Selection(selection=[('recording','Recording'),('not_recording','Not Recording')], string="Recording/Not")
-=======
->>>>>>> Stashed changes
 
     @api.model
     def create(self, vals):

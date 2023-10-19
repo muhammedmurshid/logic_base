@@ -116,17 +116,7 @@
                             <field name="class_id" invisible="1"/>
                             <field name="adm_id" invisible="1"/>
                         </group>
-<<<<<<< Updated upstream
-                        <group>
-                            <field name="course_studied"/>
-                            <field name="last_institute_studied"/>
-                            <field name="mode_of_study"/>
-                            <field name="attempt"/>
-                            <field name="recording_status"/>
-                        </group>
-=======
 
->>>>>>> Stashed changes
                     </group>
                     <notebook>
                         <page string="Private Information" name="information">
