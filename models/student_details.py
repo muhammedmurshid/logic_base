@@ -1,5 +1,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
+import base64
+from odoo.modules.module import get_module_resource
 
 
 class LogicStudents(models.Model):
@@ -20,6 +22,7 @@ class LogicStudents(models.Model):
                             copy=False, default=lambda self: 'Adv/')
     student_id = fields.Char(string='Student ID')
     joining_date = fields.Date(string='Joining Date')
+
     aadhar_number = fields.Char(string='Aadhar Number')
     parent_name = fields.Char(string='Parent Name')
     father_name = fields.Char(string='Father Name')
@@ -98,9 +101,20 @@ class LogicStudents(models.Model):
     ifsc_code = fields.Char('IFSC Code')
     branch = fields.Char('Branch')
     holder_name = fields.Char('Account Holder Name')
+    image_field = fields.Binary('Image Field',  default=lambda self: self._get_default_image(), readonly=False)
     attempt = fields.Selection(selection=[('first','First'),('second','Second'),('third','Third'),('fourth','Fourth')], string="Attempt")
     recording_status = fields.Selection(selection=[('recording','Recording'),('not_recording','Not Recording')], string="Recording/Not")
 
+    @api.model
+    def _get_default_image(self):
+        image_path = get_module_resource('hr', 'static/src/img', 'default_image.png')
+        return base64.b64encode(open(image_path, 'rb').read())
+
+    def _compute_image(self):
+        for student in self:
+            # We have to be in sudo to have access to the images
+            student_id = self.sudo().env['logic.students'].browse(student.id)
+            student.image_field = student_id.image_field
     @api.model
     def create(self, vals):
         if vals.get('reference', _('New')) == _('New'):
