@@ -29,20 +29,28 @@
                         <div t-attf-class="oe_kanban_content oe_kanban_global_click">
                             <div>
                                 <strong class="o_kanban_record_title">
-                                    <span>Batch:</span>
+                                    <span class="text-mute">Batch:</span>
                                     <span>
                                         <field name="name"/>
                                     </span>
                                 </strong>
                             </div>
-                            <div class="oe_kanban_bottom_left text-muted">
-                                <span>Class Teacher:</span>
-                                <field name="class_teacher_id"/>
+                            <div class="oe_kanban_bottom_left">
+                                <span class="text-mute">Class Teacher:</span>
+                                <field name="academic_coordinator"/>
                             </div>
-<!--                            <div class="oe_kanban_bottom_left text-muted">-->
-<!--                                <span>Student ID:</span>-->
-<!--                                <field name="student_id"/>-->
-<!--                            </div>-->
+                            <div class="oe_kanban_bottom_left text-mute">
+                                <span class="text-mute">From Date:</span>
+                                <field name="from_date"/>
+                            </div>
+                            <div class="oe_kanban_bottom_left text-mute">
+                                <span class="text-mute">To Date:</span>
+                                <field name="to_date"/>
+                            </div>
+                            <!--                            <div class="oe_kanban_bottom_left text-muted">-->
+                            <!--                                <span>Student ID:</span>-->
+                            <!--                                <field name="student_id"/>-->
+                            <!--                            </div>-->
 
                         </div>
                     </t>
@@ -59,17 +67,20 @@
                 <field name="active" invisible="1"/>
 
                 <field name="name"/>
-                <field name="product_id"/>
+                <field name="product_id" invisible="1"/>
                 <field name="company_id" invisible="1"/>
                 <field name="branch_id"/>
                 <!--                 <field name="b_nm"/> -->
                 <!--                 <field name="location"/> -->
                 <field name="tot_seats"/>
                 <field name="available_seats"/>
-                <field name="product_id" required="1"/>
+                <field name="product_id" invisible="1"/>
+                <field name="course_id"/>
                 <field name="created_id"/>
                 <field name="approve_date"/>
-                <field name="state"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-primary="state == 'marketing'" decoration-danger="state == 'cancel'"
+                       decoration-info="state == 'accounts'"/>
 
                 <!--                 <field name="state_nm_id"/> -->
             </tree>
@@ -81,13 +92,14 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_approve" string="Approve" class="btn-primary" states="draft"
-                            type="object" groups="logic_base.academic_head_batch"/>
-                     <button name="manager_approve" string="Approve" class="btn-primary" states="marketing"
-                            type="object" groups="logic_base.manager_batch"/>
-                     <button name="accounts_approve" string="Approve" class="btn-primary" states="accounts"
-                            type="object" groups="logic_base.accounts_batch"/>
-                    <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state','in', ['done','cancel'])]}"/>
+                    <button name="action_approve" string="Create Batch" class="btn-primary" states="draft"
+                            type="object" groups="logic_base.academic_head_logic_base"/>
+                    <button name="manager_approve" string="Manager Approve" class="btn-primary" states="marketing"
+                            type="object" groups="logic_base.marketing_manager_logic_base"/>
+                    <button name="accounts_approve" string="Accounts Approve" class="btn-primary" states="accounts"
+                            type="object" groups="logic_base.accounts_logic_base"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            attrs="{'invisible': [('state','in', ['done','cancel','draft'])]}"/>
                     <!--                    <button name="action_allocation" string="Student Allocation" class="btn-primary" states="active"-->
                     <!--                            type="object"/>-->
                     <field name="state" widget="statusbar"/>
@@ -101,6 +113,10 @@
                             </div>
                         </button>
                     </div>
+                    <widget name="web_ribbon" title="Active" bg_color="bg-success"
+                            attrs="{'invisible': ['|',('active_state', '!=', 'active'), ('state', '!=', 'done')]}"/>
+                    <widget name="web_ribbon" title="In Active" bg_color="bg-danger"
+                            attrs="{'invisible': ['|',('active_state', '!=', 'inactive'), ('state', '!=', 'done')]}"/>
                     <div class="oe_title pr-0">
                         <h1 class="d-flex flex-row justify-content-between">
                             <field name="name" class="o_task_name text-truncate" placeholder="Batch Name..."
@@ -115,11 +131,12 @@
 
                                 <field name="class_teacher_id" groups="logic_base.academic_head_batch"/>
                                 <field name="fee_collection_id" groups="logic_base.accounts_batch"/>
-<!--                                <field name="name" required="1"/>-->
+                                <!--                                <field name="name" required="1"/>-->
                                 <field name="academic_coordinator"/>
 
                                 <field name="code"/>
-                                <field name="product_id"/>
+                                <field name="product_id" invisible="1"/>
+                                <field name="course_id"/>
                                 <field name="created_id"/>
                                 <field name="create_date"/>
                                 <field name="approve_date"/>
@@ -128,7 +145,7 @@
                                 <field name="company_id" invisible="1"/>
                                 <field name="branch_id"/>
                                 <field name="tot_seats"/>
-<!--                                <field name="available_seats"/>-->
+                                <!--                                <field name="available_seats"/>-->
                                 <field name="from_date"/>
                                 <field name="to_date"/>
                                 <field name="batch_window" string="Exam Window" required="1"/>
@@ -148,6 +165,21 @@
                                     <field name="coordinator_id"/>
                                 </tree>
                             </field>
+                        </page>
+                        <page string="Fee Details" attrs="{'invisible': [('state', 'in', ['draft','cancel'])]}">
+                            <group>
+                                <group>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="course_fee" widget="monetary"/>
+                                    <field name="admission_fee" widget="monetary"/>
+                                    <field name="tax_id"/>
+                                </group>
+                                <group>
+                                    <field name="admission_plus_course_fee" invisible="1"/>
+                                    <field name="tax_amount" invisible="1"/>
+                                    <field name="batch_fee" widget="monetary"/>
+                                </group>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>

@@ -15,6 +15,7 @@ class LogicBaseCourses(models.Model):
     currency_id = fields.Many2one('res.currency', string='Currency', required=True,
                                   default=lambda self: self.env.user.company_id.currency_id)
     state = fields.Selection([('draft', 'Draft'), ('done', 'Done')], default='draft')
+    academic_head = fields.Many2one('res.users', string='Academic Head')
 
     def create_course(self):
         self.state = 'done'

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.rule" id="logic_base_academic_head_rules_courses">
+            <field name="name">Base Academic Head Course view</field>
+            <field name="model_id" ref="model_logic_base_courses"/>
+            <field name="domain_force">['|',('academic_head.id','=', user.id),
+                ('create_uid.id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('logic_base.academic_head_logic_base'))]"/>
+        </record>
+        <record model="ir.rule" id="logic_base_coordinator_rules_courses">
+            <field name="name">Base Academic Coordinator Course view</field>
+            <field name="model_id" ref="model_logic_base_courses"/>
+            <field name="domain_force">['|',('academic_head.id','=', user.employee_id.parent_id.user_id.id),
+                ('create_uid.id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('logic_base.coordinator_logic_base'))]"/>
+        </record>
+        <record model="ir.rule" id="logic_base_coordinator_rules_batches">
+            <field name="name">Base Academic Coordinator Batch view</field>
+            <field name="model_id" ref="model_logic_base_batch"/>
+            <field name="domain_force">['|',('academic_coordinator.id','=', user.id),
+                ('create_uid.id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('logic_base.coordinator_logic_base'))]"/>
+        </record>
+        <record model="ir.rule" id="logic_base_heads_rules_batches">
+            <field name="name">Base Academic Heads Batch view</field>
+            <field name="model_id" ref="model_logic_base_batch"/>
+            <field name="domain_force">['|','|',('academic_coordinator.employee_id.parent_id.user_id.id','=', user.id),
+                ('create_uid.id', '=', user.id), ('course_id.academic_head.id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('logic_base.coordinator_logic_base'))]"/>
+        </record>
+        <record model="ir.rule" id="logic_base_heads_rules_students">
+            <field name="name">Base Academic Heads Students view</field>
+            <field name="model_id" ref="model_logic_students"/>
+            <field name="domain_force">['|','|',('batch_id.course_id.academic_head.id','=', user.id),
+                ('create_uid.id', '=', user.id), ('batch_id.academic_coordinator.employee_id.parent_id.user_id.id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('logic_base.academic_head_logic_base'))]"/>
+        </record>
+        <record model="ir.rule" id="logic_base_coordinator_rules_students">
+            <field name="name">Base Academic Coordinator Students view</field>
+            <field name="model_id" ref="model_logic_students"/>
+            <field name="domain_force">['|',
+                ('create_uid.id', '=', user.id), ('batch_id.academic_coordinator.id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('logic_base.coordinator_logic_base'))]"/>
+        </record>
+    </data>
+</odoo>

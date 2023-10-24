@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail_for_logic_base_batches" model="mail.activity.type">
+            <field name="name">Base Batch Activity</field>
+            <field name="res_model_id" ref="logic_base.model_logic_base_batch"/>
+            <field name="delay_count">30</field>
+        </record>
+    </data>
+</odoo>

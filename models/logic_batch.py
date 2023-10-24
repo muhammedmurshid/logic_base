@@ -1,5 +1,5 @@
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from datetime import timedelta
 from datetime import date
 
@@ -36,6 +36,7 @@ class LogicBaseBathes(models.Model):
          ('june', 'June'), ('july', 'July'), ('august', 'August'), ('september', 'September'), ('october', 'October'),
          ('november', 'November'), ('december', 'December')], string="Month")
     from_date = fields.Date(string="Start Date")
+    course_id = fields.Many2one('logic.base.courses', string="Course")
     to_date = fields.Date(string="End Date")
     class_id = fields.Many2one('res.class', string="class")
     class_ids = fields.One2many("logic.base.class", "batch_id", string="Classes")
@@ -46,6 +47,11 @@ class LogicBaseBathes(models.Model):
     active_state = fields.Selection([('active', 'Active'), ('inactive', 'Inactive')], string="Status", default='active')
     class_teacher_id = fields.Many2one('hr.employee', string="Class Teacher")
     fee_collection_id = fields.Many2one('hr.employee', string="Fee Collector")
+
+    # fee details
+    admission_fee = fields.Float(string="Admission Fee")
+    course_fee = fields.Float(string="Course Fee")
+    tax_id = fields.Many2one('account.tax', string="Tax")
 
     def name_get(self):
         result = []
@@ -104,21 +110,77 @@ class LogicBaseBathes(models.Model):
     make_visible_manager_batch = fields.Boolean(string="User", default=True, compute='get_batch_manager')
 
     def action_cancel(self):
+        activity_id = self.env['mail.activity'].search(
+            [('res_id', '=', self.id), (
+                'activity_type_id', '=', self.env.ref('logic_base.mail_for_logic_base_batches').id)])
+        activity_id.action_feedback(feedback=f'Rejected.')
         self.state = 'cancel'
 
     def action_approve(self):
+        for i in self:
+            print('ppp')
+            users = self.env.ref('logic_base.marketing_manager_logic_base').users
+            for user in users:
+                i.activity_schedule('logic_base.mail_for_logic_base_batches', user_id=user.id,
+                                    note=f'Batch is created Please add fee details and approve.')
+            #     if user.has_group('logic_base.marketing_manager_logic_base'):
+            #         print(user.name, 'user')
+
         self.state = 'marketing'
         for i in self:
             i.approve_date = date.today()
             i.created_id = self.env.user.id
 
     def manager_approve(self):
+
+        if not self.course_fee:
+            raise UserError(_("Please Enter Course Fee"))
+        if not self.admission_fee:
+            raise UserError(_("Please Enter Admission Fee"))
+        if not self.tax_id:
+            raise UserError(_("Please Enter Tax"))
         self.state = 'accounts'
-        # for i in self:
-        #     i.approve_date = date.today()
-        #     i.created_id = self.env.user.id
+        activity_id = self.env['mail.activity'].search(
+            [('res_id', '=', self.id), ('user_id', '=', self.env.user.id), (
+                'activity_type_id', '=', self.env.ref('logic_base.mail_for_logic_base_batches').id)])
+        activity_id.action_feedback(feedback=f'Approved.')
+        users = self.env.ref('logic_base.accounts_logic_base').users
+        for user in users:
+            self.activity_schedule('logic_base.mail_for_logic_base_batches', user_id=user.id,
+                                note=f'Batch is created Please check details and approve.')
+
+    admission_plus_course_fee = fields.Float(string="Admission + Course Fee",
+                                             compute='_compute_admission_plus_course_fee', store=True)
+
+    @api.depends('admission_fee', 'course_fee')
+    def _compute_admission_plus_course_fee(self):
+        for i in self:
+            i.admission_plus_course_fee = i.admission_fee + i.course_fee
+
+    tax_amount = fields.Float(string="Tax Amount", compute='_compute_tax_amount', store=True)
+
+    @api.depends('tax_id', 'admission_plus_course_fee')
+    def _compute_tax_amount(self):
+        for i in self:
+            print(i.tax_id.amount_type, 'tax')
+            if i.tax_id.amount_type == 'percent':
+                if i.admission_plus_course_fee != 0:
+                    i.tax_amount = i.tax_id.amount / i.admission_plus_course_fee
+
+    batch_fee = fields.Float(string="Batch Fee", compute='_compute_batch_fee', store=True)
+    currency_id = fields.Many2one('res.currency', string='Currency', required=True,
+                                  default=lambda self: self.env.user.company_id.currency_id)
+
+    @api.depends('course_fee', 'admission_fee', 'tax_amount', 'admission_plus_course_fee')
+    def _compute_batch_fee(self):
+        for i in self:
+            i.batch_fee = i.tax_amount + i.admission_plus_course_fee
 
     def accounts_approve(self):
+        activity_id = self.env['mail.activity'].search(
+            [('res_id', '=', self.id), (
+                'activity_type_id', '=', self.env.ref('logic_base.mail_for_logic_base_batches').id)])
+        activity_id.action_feedback(feedback=f'Approved.')
         self.state = 'done'
         # for i in self:
         #     i.approve_date = date.today()

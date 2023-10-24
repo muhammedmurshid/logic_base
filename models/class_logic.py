@@ -56,6 +56,9 @@ class ClassMaster(models.Model):
         for i in self:
             self.batch_check_id = i.batch_id.id
 
+    def action_in_active(self):
+        self.state = 'inactive'
+
     def action_approve(self):
         self.state = 'active'
         for i in self:

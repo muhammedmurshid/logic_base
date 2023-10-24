@@ -4,11 +4,15 @@
         <field name="name">res.course.tree</field>
         <field name="model">logic.base.courses</field>
         <field name="arch" type="xml">
-            <tree string="Batch">
+            <tree string="Course">
                 <!--                 <field name="district_code"/> -->
                 <field name="name"/>
-                <field name="course_fee"/>
-                <field name="state"/>
+                <field name="company_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="course_fee" widget="monetary"/>
+                <field name="academic_head"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-info="state == 'draft'" string="Status"/>
 
                 <!--                 <field name="state_nm_id"/> -->
             </tree>
@@ -21,7 +25,8 @@
             <form>
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
-                    <button id="create_course" name="create_course" string="Create" states="draft" class="btn-primary" type="object"/>
+                    <button id="create_course" name="create_course" string="Create" states="draft" class="btn-primary"
+                            type="object"/>
                     <button id="return_menu" name="return_menu" string="Return" states="done" type="object"/>
 
                 </header>
@@ -35,9 +40,10 @@
                     </div>
                     <group>
                         <group>
-<!--                            <field name="name"/>-->
+                            <!--                            <field name="name"/>-->
                             <field name="course_fee" widget="monetary"/>
                             <field name="type"/>
+                            <field name="academic_head" required="1"/>
                             <field name="board_registration"/>
                             <field name="company_id" invisible="1"/>
                             <field name="currency_id" invisible="1"/>
@@ -80,6 +86,10 @@
                                 <field name="type"/>
                                 <field name="active" invisible="1"/>
 
+                            </div>
+                            <div class="oe_kanban_bottom_left text-muted">
+                                <span>Academic Head:</span>
+                                <field name="academic_head"/>
                             </div>
 
                         </div>

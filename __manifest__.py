@@ -6,12 +6,14 @@
     'data': [
         'security/groups.xml',
         'security/ir.model.access.csv',
+        'security/base_rules.xml',
         'views/logic_students.xml',
         'views/logic_batch.xml',
         'views/class_logic.xml',
         'views/stud_allocation.xml',
         'views/logic_courses.xml',
-        'views/branches.xml'
+        'views/branches.xml',
+        'data/activity.xml',
 
     ],
     'demo': [],
