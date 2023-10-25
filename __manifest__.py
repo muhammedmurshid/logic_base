@@ -2,7 +2,7 @@
     'name': "Logic Base",
     'version': "14.0.1.0",
     'sequence': "0",
-    'depends': ['base', 'mail', 'hr'],
+    'depends': ['base', 'mail', 'hr',],
     'data': [
         'security/groups.xml',
         'security/ir.model.access.csv',

@@ -47,7 +47,8 @@ class LogicStudents(models.Model):
     state = fields.Many2one('res.country.state', 'Fed. State', domain="[('country_id', '=?', country)]")
     country = fields.Many2one('res.country')
     stud_id = fields.Integer()
-    batch_id = fields.Many2one('logic.base.batch', string='Batch')
+    batch_id = fields.Many2one('logic.base.batch', string='Batch',
+                               domain=['&', ('state', '=', 'done'), ('active_state', '=', 'active')])
     status = fields.Selection([('draft', 'Draft'), ('linked', 'Linked'), ('discontinue', 'Discontinued')],
                               default='draft', string='Status', tracking=True)
     related_partner = fields.Many2one('res.partner', string='Related Partner')
@@ -101,9 +102,12 @@ class LogicStudents(models.Model):
     ifsc_code = fields.Char('IFSC Code')
     branch = fields.Char('Branch')
     holder_name = fields.Char('Account Holder Name')
-    image_field = fields.Binary('Image Field',  default=lambda self: self._get_default_image(), readonly=False)
-    attempt = fields.Selection(selection=[('first','First'),('second','Second'),('third','Third'),('fourth','Fourth')], string="Attempt")
-    recording_status = fields.Selection(selection=[('recording','Recording'),('not_recording','Not Recording')], string="Recording/Not")
+    image_field = fields.Binary('Image Field', default=lambda self: self._get_default_image(), readonly=False)
+    attempt = fields.Selection(
+        selection=[('first', 'First'), ('second', 'Second'), ('third', 'Third'), ('fourth', 'Fourth')],
+        string="Attempt")
+    recording_status = fields.Selection(selection=[('recording', 'Recording'), ('not_recording', 'Not Recording')],
+                                        string="Recording/Not")
 
     @api.model
     def _get_default_image(self):
@@ -115,6 +119,7 @@ class LogicStudents(models.Model):
             # We have to be in sudo to have access to the images
             student_id = self.sudo().env['logic.students'].browse(student.id)
             student.image_field = student_id.image_field
+
     @api.model
     def create(self, vals):
         if vals.get('reference', _('New')) == _('New'):

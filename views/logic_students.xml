@@ -114,7 +114,7 @@
                             <!--                            <field name="adm_no_id"/>-->
                         </group>
                         <group>
-                            <field name="batch_id"/>
+                            <field name="batch_id" options="{'no_create': True}"/>
                             <field name="mode_of_study"/>
                             <field name="class_id" invisible="1"/>
                             <field name="adm_id" invisible="1"/>

@@ -162,10 +162,11 @@ class LogicBaseBathes(models.Model):
     @api.depends('tax_id', 'admission_plus_course_fee')
     def _compute_tax_amount(self):
         for i in self:
-            print(i.tax_id.amount_type, 'tax')
-            if i.tax_id.amount_type == 'percent':
-                if i.admission_plus_course_fee != 0:
-                    i.tax_amount = i.tax_id.amount / i.admission_plus_course_fee
+            # print(i.tax_id.amount_type, 'tax')
+            if i.tax_id.amount_type:
+                if i.tax_id.amount_type == 'percent':
+                    if i.admission_plus_course_fee != 0:
+                        i.tax_amount = (i.admission_plus_course_fee * i.tax_id.amount) / 100
 
     batch_fee = fields.Float(string="Batch Fee", compute='_compute_batch_fee', store=True)
     currency_id = fields.Many2one('res.currency', string='Currency', required=True,
