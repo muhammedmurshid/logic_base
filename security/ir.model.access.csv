@@ -8,13 +8,14 @@ access_upaya_attendance,access_course,model_students_attendance_upaya,base.group
 access_yes_plus_attendance,access_course,model_students_attendance_yes_plus,base.group_user,1,1,1,1
 access_yes_plus_attendance_std,access_course,model_bring_buddy_students_attendance,base.group_user,1,1,1,1
 base_branch,access_details_branch,model_logic_base_branches,base.group_user,1,1,1,1
+access_base_class,access_course,model_logic_base_class,base.group_user,1,0,0,0
 
 access_courses_admin,access_course,model_logic_base_courses,admin_logic_base,1,1,1,1
 access_courses_coordinator,access_course,model_logic_base_courses,coordinator_logic_base,1,1,1,1
 access_courses_manager,access_course,model_logic_base_courses,marketing_manager_logic_base,1,1,1,1
 access_courses_accounts,access_course,model_logic_base_courses,accounts_logic_base,1,1,1,1
 access_courses_head,access_course,model_logic_base_courses,academic_head_logic_base,1,1,1,1
-access_courses_coordinator,access_course,model_logic_base_courses,base.group_user,1,0,0,0
+access_courses_base,access_course,model_logic_base_courses,base.group_user,1,0,0,0
 
 
 access_batch_admin,access_details,model_logic_base_batch,admin_logic_base,1,1,1,1
@@ -22,13 +23,18 @@ access_batch_coordinator,access_details,model_logic_base_batch,coordinator_logic
 access_batch_manager,access_details,model_logic_base_batch,marketing_manager_logic_base,1,1,1,1
 access_batch_accounts,access_details,model_logic_base_batch,accounts_logic_base,1,1,1,1
 access_batch_head,access_details,model_logic_base_batch,academic_head_logic_base,1,1,1,1
+access_batch_base,access_course,model_logic_base_batch,base.group_user,1,0,0,0
+access_batch_others,access_details,model_logic_base_batch,logic_base_batch_others,1,0,0,0
+
 
 access_student_admin,access_details,model_logic_students,admin_logic_base,1,1,1,1
 access_student_coordinator,access_details,model_logic_students,coordinator_logic_base,1,1,1,1
 access_student_manager,access_details,model_logic_students,marketing_manager_logic_base,1,1,1,1
 access_student_accounts,access_details,model_logic_students,accounts_logic_base,1,1,1,1
 access_student_head,access_details,model_logic_students,academic_head_logic_base,1,1,1,1
-access_student,access_details,model_logic_students,base.group_user,0,1,1,1
+access_student,access_details,model_logic_students,base.group_user,0,1,1,0
+access_batch_others,access_details,model_logic_students,logic_base_batch_others,1,0,0,0
+
 
 
 
