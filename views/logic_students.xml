@@ -267,6 +267,10 @@
                                     <field name="day_three_cip"/>
                                     <field name="day_three_cip_attendance"/>
                                 </group>
+                                <group string="Day 4">
+                                    <field name="day_four_cip"/>
+                                    <field name="day_four_cip_attendance"/>
+                                </group>
                             </group>
                         </page>
                     </notebook>

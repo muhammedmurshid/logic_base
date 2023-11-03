@@ -95,6 +95,9 @@ class LogicStudents(models.Model):
     day_three_cip_attendance = fields.Selection(
         [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')],
         'Attendance')
+    day_four_cip = fields.Date('Date')
+    day_four_cip_attendance = fields.Selection(
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')], 'Attendance')
 
     # students Bank details
     bank_name = fields.Char('Bank Name')
