@@ -49,7 +49,8 @@
                             <field name="currency_id" invisible="1"/>
                         </group>
                         <group>
-                            <field name="papers" widget="many2many_tags"/>
+                            <field name="course_levels" widget="many2many_tags" options="{'no_create':True}"/>
+                            <field name="papers" widget="many2many_tags" options="{'no_create':True}"/>
                         </group>
                     </group>
                 </sheet>
@@ -112,23 +113,24 @@
     </record>
     <menuitem id="course_base_logic" name="Courses" parent="menu_students_base"
               sequence="5"/>
-    <menuitem id="course_base_logic_second" name="Course" action="res_course_action_logic_base"
+    <menuitem id="course_base_logic_second" name="Courses" action="res_course_action_logic_base"
               parent="course_base_logic"
-              sequence="1"/>
+              sequence="5"/>
 
     <record id="res_course_papers__tree_base" model="ir.ui.view">
         <field name="name">res.course.papers.tree</field>
         <field name="model">course.papers</field>
         <field name="arch" type="xml">
             <tree string="Course Papers">
-                <field name="course_id"/>
-                <field name="name" />
+                <!--                <field name="course_id"/>-->
+                <field name="name"/>
 
 
                 <!--                 <field name="state_nm_id"/> -->
             </tree>
         </field>
     </record>
+
     <record id="course_papers_form_base" model="ir.ui.view">
         <field name="name">res.course.papers.form</field>
         <field name="model">course.papers</field>
@@ -138,8 +140,9 @@
                 <sheet>
                     <group>
                         <group>
-<!--                            <field name="course_id" required="1" options="{'no_create': True}"/>-->
+                            <!--                            <field name="course_id" required="1" options="{'no_create': True}"/>-->
                             <field name="name" required="1"/>
+                            <field name="group_ids" widget="many2many_tags" options="{'no_create':True}"/>
                         </group>
                     </group>
                 </sheet>
@@ -161,6 +164,106 @@
 
     <menuitem id="course_papers_base_logic" name="Course Papers" action="res_course_papers_action_logic_base"
               parent="course_base_logic"
+              sequence="4"/>
+
+
+    <record id="res_course_levels_tree_base" model="ir.ui.view">
+        <field name="name">res.course.levels.tree</field>
+        <field name="model">course.levels</field>
+        <field name="arch" type="xml">
+            <tree string="Course Papers">
+                <!--                <field name="course_id"/>-->
+                <field name="name"/>
+
+
+                <!--                 <field name="state_nm_id"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="course_levels_form_base" model="ir.ui.view">
+        <field name="name">res.course.levels.form</field>
+        <field name="model">course.levels</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <!--                            <field name="course_id" required="1" options="{'no_create': True}"/>-->
+                            <field name="name" required="1"/>
+<!--                            <field name="groups_ids" options="{'no_create':True}" widget="many2many_tags"/>-->
+                            <field name="course_id" options="{'no_create':True}" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="res_course_levels_action_logic_base" model="ir.actions.act_window">
+        <field name="name">Courses Levels</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">course.levels</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="course_levels_base_logic" name="Course Levels" action="res_course_levels_action_logic_base"
+              parent="course_base_logic"
               sequence="2"/>
+
+    <record id="res_course_groups_tree_base" model="ir.ui.view">
+        <field name="name">res.course.groups.tree</field>
+        <field name="model">course.groups</field>
+        <field name="arch" type="xml">
+            <tree string="Course Papers">
+                <!--                <field name="course_id"/>-->
+                <field name="name"/>
+
+
+                <!--                 <field name="state_nm_id"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="course_groups_form_base" model="ir.ui.view">
+        <field name="name">res.course.groups.form</field>
+        <field name="model">course.groups</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <!--                            <field name="course_id" required="1" options="{'no_create': True}"/>-->
+                            <field name="name" required="1"/>
+                            <field name="level_ids" options="{'no_create':True}" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="res_course_groups_action_logic_base" model="ir.actions.act_window">
+        <field name="name">Courses Groups</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">course.groups</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="course_groups_base_logic" name="Course Groups" action="res_course_groups_action_logic_base"
+              parent="course_base_logic"
+              sequence="3"/>
 
 </odoo>

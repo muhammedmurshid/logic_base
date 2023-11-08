@@ -24,6 +24,20 @@ access_course_papers_academic,access_course,model_course_papers,academic_head_lo
 access_course_papers_acc,access_course,model_course_papers,accounts_logic_base,1,1,1,1
 access_course_papers_admin,access_course,model_course_papers,admin_logic_base,1,1,1,1
 
+access_course_levels,access_course,model_course_levels,base.group_user,1,0,0,0
+access_course_levels_coo,access_course,model_course_levels,coordinator_logic_base,1,1,1,1
+access_course_levels_marketing,access_course,model_course_levels,marketing_manager_logic_base,1,1,1,1
+access_course_levels_academic,access_course,model_course_levels,academic_head_logic_base,1,1,1,1
+access_course_levels_acc,access_course,model_course_levels,accounts_logic_base,1,1,1,1
+access_course_levels_admin,access_course,model_course_levels,admin_logic_base,1,1,1,1
+
+access_course_groups,access_course,model_course_groups,base.group_user,1,0,0,0
+access_course_groups_coo,access_course,model_course_groups,coordinator_logic_base,1,1,1,1
+access_course_groups_marketing,access_course,model_course_groups,marketing_manager_logic_base,1,1,1,1
+access_course_groups_academic,access_course,model_course_groups,academic_head_logic_base,1,1,1,1
+access_course_groups_acc,access_course,model_course_groups,accounts_logic_base,1,1,1,1
+access_course_groups_admin,access_course,model_course_groups,admin_logic_base,1,1,1,1
+
 access_batch_admin,access_details,model_logic_base_batch,admin_logic_base,1,1,1,1
 access_batch_coordinator,access_details,model_logic_base_batch,coordinator_logic_base,1,1,1,1
 access_batch_manager,access_details,model_logic_base_batch,marketing_manager_logic_base,1,1,1,1
