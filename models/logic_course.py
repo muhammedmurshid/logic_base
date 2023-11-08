@@ -52,7 +52,7 @@ class CourseLevels(models.Model):
 
     name = fields.Char(string='Level', required=True)
     groups_ids = fields.Many2many('course.groups', string='Groups')
-    course_id = fields.Many2many('logic.base.courses', string='Course')
+    course_id = fields.Many2one('logic.base.courses', string='Course')
 
 
 class CourseGroups(models.Model):
