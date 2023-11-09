@@ -8,8 +8,9 @@ class LogicBaseCourses(models.Model):
     active = fields.Boolean(default=True)
     name = fields.Char(string='Name', required=True)
     course_fee = fields.Float(string='Course Fee')
-    type = fields.Selection([('indian', 'Indian'), ('international', 'International'), ('crash', 'Crash')],
-                            string='Type')
+    type = fields.Selection(
+        [('indian', 'Indian'), ('international', 'International'), ('crash', 'Crash'), ('nil', 'Nil')],
+        string='Type')
     board_registration = fields.Boolean(string='Board Registration')
     company_id = fields.Many2one('res.company', string="Branch", default=lambda self: self.env.company.id)
     currency_id = fields.Many2one('res.currency', string='Currency', required=True,
