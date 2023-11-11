@@ -100,6 +100,7 @@
                             type="object" groups="logic_base.accounts_logic_base"/>
                     <button name="action_cancel" string="Cancel" type="object"
                             attrs="{'invisible': [('state','in', ['done','cancel','draft'])]}"/>
+                    <button name="action_direct_done" states="draft" groups="logic_base.admin_logic_base" type="object" class="oe_highlight" string="Done"/>
                     <!--                    <button name="action_allocation" string="Student Allocation" class="btn-primary" states="active"-->
                     <!--                            type="object"/>-->
                     <field name="state" widget="statusbar"/>

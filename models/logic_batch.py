@@ -53,6 +53,9 @@ class LogicBaseBathes(models.Model):
     course_fee = fields.Float(string="Course Fee")
     tax_id = fields.Many2one('account.tax', string="Tax")
 
+    def action_direct_done(self):
+        self.state = 'done'
+
     def name_get(self):
         result = []
         for record in self:

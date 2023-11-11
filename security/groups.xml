@@ -30,6 +30,10 @@
             <field name="name">Coordinator</field>
             <field name="category_id" ref="module_logic_base_groups"/>
         </record>
+        <record id="program_coordinator_logic_base" model="res.groups">
+            <field name="name">Program Coordinator</field>
+            <field name="category_id" ref="module_logic_base_groups"/>
+        </record>
         <record id="logic_base_batch_others" model="res.groups">
             <field name="name">Others</field>
             <field name="category_id" ref="module_logic_base_groups"/>

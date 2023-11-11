@@ -9,6 +9,8 @@ access_yes_plus_attendance,access_course,model_students_attendance_yes_plus,base
 access_yes_plus_attendance_std,access_course,model_bring_buddy_students_attendance,base.group_user,1,1,1,1
 base_branch,access_details_branch,model_logic_base_branches,base.group_user,1,1,1,1
 access_base_class,access_course,model_logic_base_class,base.group_user,1,0,0,0
+access_base_class_program_coordinator,access_course,model_logic_base_class,logic_base.program_coordinator_logic_base,1,0,0,0
+
 
 access_courses_admin,access_course,model_logic_base_courses,admin_logic_base,1,1,1,1
 access_courses_coordinator,access_course,model_logic_base_courses,coordinator_logic_base,1,1,1,1
@@ -16,6 +18,7 @@ access_courses_manager,access_course,model_logic_base_courses,marketing_manager_
 access_courses_accounts,access_course,model_logic_base_courses,accounts_logic_base,1,1,1,1
 access_courses_head,access_course,model_logic_base_courses,academic_head_logic_base,1,1,1,1
 access_courses_base,access_course,model_logic_base_courses,base.group_user,1,0,0,0
+access_base_courses_program_coordinator,access_course,model_logic_base_courses,logic_base.program_coordinator_logic_base,1,0,0,0
 
 access_course_papers,access_course,model_course_papers,base.group_user,1,0,0,0
 access_course_papers_coo,access_course,model_course_papers,coordinator_logic_base,1,1,1,1
@@ -23,6 +26,8 @@ access_course_papers_marketing,access_course,model_course_papers,marketing_manag
 access_course_papers_academic,access_course,model_course_papers,academic_head_logic_base,1,1,1,1
 access_course_papers_acc,access_course,model_course_papers,accounts_logic_base,1,1,1,1
 access_course_papers_admin,access_course,model_course_papers,admin_logic_base,1,1,1,1
+access_base_course_papers_program_coordinator,access_course,model_course_papers,logic_base.program_coordinator_logic_base,1,0,0,0
+
 
 access_course_levels,access_course,model_course_levels,base.group_user,1,0,0,0
 access_course_levels_coo,access_course,model_course_levels,coordinator_logic_base,1,1,1,1
@@ -30,6 +35,7 @@ access_course_levels_marketing,access_course,model_course_levels,marketing_manag
 access_course_levels_academic,access_course,model_course_levels,academic_head_logic_base,1,1,1,1
 access_course_levels_acc,access_course,model_course_levels,accounts_logic_base,1,1,1,1
 access_course_levels_admin,access_course,model_course_levels,admin_logic_base,1,1,1,1
+access_base_course_levels_program_coordinator,access_course,model_course_levels,logic_base.program_coordinator_logic_base,1,0,0,0
 
 access_course_groups,access_course,model_course_groups,base.group_user,1,0,0,0
 access_course_groups_coo,access_course,model_course_groups,coordinator_logic_base,1,1,1,1
@@ -37,6 +43,8 @@ access_course_groups_marketing,access_course,model_course_groups,marketing_manag
 access_course_groups_academic,access_course,model_course_groups,academic_head_logic_base,1,1,1,1
 access_course_groups_acc,access_course,model_course_groups,accounts_logic_base,1,1,1,1
 access_course_groups_admin,access_course,model_course_groups,admin_logic_base,1,1,1,1
+access_base_course_groups_program_coordinator,access_course,model_course_groups,logic_base.program_coordinator_logic_base,1,0,0,0
+
 
 access_batch_admin,access_details,model_logic_base_batch,admin_logic_base,1,1,1,1
 access_batch_coordinator,access_details,model_logic_base_batch,coordinator_logic_base,1,1,1,1
@@ -45,6 +53,7 @@ access_batch_accounts,access_details,model_logic_base_batch,accounts_logic_base,
 access_batch_head,access_details,model_logic_base_batch,academic_head_logic_base,1,1,1,1
 access_batch_base,access_course,model_logic_base_batch,base.group_user,1,0,0,0
 access_batch_others,access_details,model_logic_base_batch,logic_base_batch_others,1,0,0,0
+access_base_batch_program_coordinator,access_course,model_logic_base_batch,logic_base.program_coordinator_logic_base,1,0,0,0
 
 
 access_student_admin,access_details,model_logic_students,admin_logic_base,1,1,1,1
@@ -54,6 +63,8 @@ access_student_accounts,access_details,model_logic_students,accounts_logic_base,
 access_student_head,access_details,model_logic_students,academic_head_logic_base,1,1,1,1
 access_student,access_details,model_logic_students,base.group_user,0,1,1,0
 access_batch_others,access_details,model_logic_students,logic_base_batch_others,1,0,0,0
+access_base_students_program_coordinator,access_course,model_logic_students,logic_base.program_coordinator_logic_base,1,0,0,0
+
 
 
 
