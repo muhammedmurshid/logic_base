@@ -54,6 +54,8 @@ access_batch_head,access_details,model_logic_base_batch,academic_head_logic_base
 access_batch_base,access_course,model_logic_base_batch,base.group_user,1,0,0,0
 access_batch_others,access_details,model_logic_base_batch,logic_base_batch_others,1,0,0,0
 access_base_batch_program_coordinator,access_course,model_logic_base_batch,logic_base.program_coordinator_logic_base,1,0,0,0
+access_student_sfc_record,access_details,model_students_faculty_club_data,,1,1,1,1
+
 
 
 access_student_admin,access_details,model_logic_students,admin_logic_base,1,1,1,1

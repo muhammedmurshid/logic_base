@@ -178,7 +178,7 @@
                             </group>
 
                         </page>
-                        <page string="Upaya Attendance" name="attribute">
+                        <page string="Upaya" name="attribute">
                             <field name="upaya_std_ids">
                                 <tree string="Upaya Attendance" editable="bottom">
                                     <field name="name"/>
@@ -203,7 +203,7 @@
                         <!--                                </tree>-->
                         <!--                            </field>-->
                         <!--                        </page>-->
-                        <page string="Yes Plus Attendance" name="attribute">
+                        <page string="Yes Plus" name="attribute">
                             <group>
                                 <group string="Day 1">
                                     <field name="day_one_date"/>
@@ -227,7 +227,7 @@
                                 </group>
                             </group>
                         </page>
-                        <page string="Bring Your Buddy Attendance" name="attribute">
+                        <page string="Bring Your Buddy" name="attribute">
                             <field name="bring_buddy_attendance_ids">
                                 <tree string="Bring Your Buddy Attendance" editable="bottom">
                                     <field name="name"/>
@@ -237,7 +237,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Excel Attendance" name="excel">
+                        <page string="Excel" name="excel">
                             <group>
                                 <group string="Day 1">
                                     <field name="day_one_excel"/>
@@ -253,7 +253,7 @@
                                 </group>
                             </group>
                         </page>
-                        <page string="CIP Attendance" name="excel">
+                        <page string="CIP" name="excel">
                             <group>
                                 <group string="Day 1">
                                     <field name="day_one_cip"/>
@@ -273,8 +273,69 @@
                                 </group>
                             </group>
                         </page>
-                    </notebook>
 
+                        <page string="Presentation" name="presentation_date">
+                            <group>
+                                <group>
+                                    <field name="presentation_date"/>
+                                    <field name="presentation_rating" widget="priority"/>
+                                    <field name="presentation_feedback"/>
+                                </group>
+                            </group>
+
+                        </page>
+
+                        <page string="SFC" name="sfc_data">
+                            <field name="sfc_ids">
+                                <tree string="SFC" editable="bottom">
+                                    <field name="sfc_start_time"/>
+                                    <field name="sfc_end_time"/>
+                                    <field name="sfc_topic"/>
+                                    <field name="sfc_duration"/>
+                                </tree>
+                            </field>
+
+                        </page>
+
+                        <page string="Mock Interview" name="mock_interview">
+                            <group>
+                                <group>
+                                    <field name="mock_date"/>
+                                    <field name="mock_communication_skill" widget="priority"/>
+                                    <field name="mock_language_skill" widget="priority"/>
+                                    <field name="mock_attitude" widget="priority"/>
+                                    <field name="mock_presentation_skill" widget="priority"/>
+                                    <field name="mock_confidence_level" widget="priority"/>
+                                    <field name="mock_body_language" widget="priority"/>
+                                    <field name="mock_dressing_pattern" widget="priority"/>
+                                    <field name="mock_quality_of_resume" widget="priority"/>
+                                    <field name="mock_friendliness" widget="priority"/>
+                                </group>
+                            </group>
+
+                        </page>
+
+                        <page string="Results" name="results">
+                            <group>
+                                <group>
+                                    <field name="qualification_status"/>
+                                    <field name="result_sc" widget="image" style="width:100px;"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Placements" name="placements">
+                            <group>
+                                <group>
+                                    <field name="placement_company_name"/>
+                                    <field name="placement_job_position"/>
+                                    <field name="placement_starting_salary"/>
+                                    <field name="placement_joining_date"/>
+                                </group>
+                            </group>
+                        </page>
+
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids"
@@ -298,13 +359,13 @@
                 <field name="mode_of_study"/>
                 <field name="current_status"/>
                 <field name="image_field"/>
-
                 <templates>
                     <t t-name="kanban-box">
-                       <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
-                        <div class="o_kanban_image">
-                            <img t-att-src="kanban_image('logic.students', 'image_field', record.id.raw_value)" style="width:100px; height:auto"/>
-                        </div>
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('logic.students', 'image_field', record.id.raw_value)"
+                                     style="width:100px; height:auto"/>
+                            </div>
                             <div class="oe_kanban_details">
                                 <div class="o_kanban_record_top">
                                     <div class="o_kanban_record_headings">

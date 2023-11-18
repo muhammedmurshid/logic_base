@@ -112,6 +112,70 @@ class LogicStudents(models.Model):
     recording_status = fields.Selection(selection=[('recording', 'Recording'), ('not_recording', 'Not Recording')],
                                         string="Recording/Not")
 
+    # presentation
+    presentation_date = fields.Date('Date')
+    presentation_rating = fields.Selection(
+        selection=[('0', 'No rating'), ('1', 'Very Poor'), ('2', 'Poor'), ('3', 'Average'), ('4', 'Good'),
+                   ('5', 'Very Good')], string="Rating", default='0')
+    presentation_feedback = fields.Text(string="Feedback")
+
+    # sfc
+    sfc_ids = fields.One2many('students.faculty.club.data', 'sfc_id', string='SFC')
+
+    # mock interview
+    mock_date = fields.Date('Date')
+
+    mock_communication_skill = fields.Selection(
+        [('0', 'None'), ('1', 'Poor'), ('2', 'Fair'), ('3', 'Good'), ('4', 'Very Good'), ('5', 'Excellent')],
+        string='Communication Skill',
+    )
+    mock_language_skill = fields.Selection(
+        [('0', 'None'), ('1', 'Poor'), ('2', 'Fair'), ('3', 'Good'), ('4', 'Very Good'), ('5', 'Excellent')],
+        string='Language Skill',
+    )
+    mock_presentation_skill = fields.Selection(
+        [('0', 'None'), ('1', 'Poor'), ('2', 'Fair'), ('3', 'Good'), ('4', 'Very Good'), ('5', 'Excellent')],
+        string='Presentation Skill',
+    )
+    mock_confidence_level = fields.Selection(
+        [('0', 'None'), ('1', 'Poor'), ('2', 'Fair'), ('3', 'Good'), ('4', 'Very Good'), ('5', 'Excellent')],
+        string='Confidence Level',
+    )
+    mock_body_language = fields.Selection(
+        [('0', 'None'), ('1', 'Poor'), ('2', 'Fair'), ('3', 'Good'), ('4', 'Very Good'), ('5', 'Excellent')],
+        string='Body Language',
+    )
+    mock_dressing_pattern = fields.Selection(
+        [('0', 'None'), ('1', 'Poor'), ('2', 'Fair'), ('3', 'Good'), ('4', 'Very Good'), ('5', 'Excellent')],
+        string='Dressing Pattern',
+    )
+    mock_attitude = fields.Selection(
+        [('0', 'None'), ('1', 'Poor'), ('2', 'Fair'), ('3', 'Good'), ('4', 'Very Good'), ('5', 'Excellent')],
+        string='Attitude',
+    )
+    mock_quality_of_resume = fields.Selection(
+        [('0', 'None'), ('1', 'Poor'), ('2', 'Fair'), ('3', 'Good'), ('4', 'Very Good'), ('5', 'Excellent')],
+        string='Quality of Resume',
+    )
+    mock_friendliness = fields.Selection(
+        [('0', 'None'), ('1', 'Poor'), ('2', 'Fair'), ('3', 'Good'), ('4', 'Very Good'), ('5', 'Excellent')],
+        string='Friendliness',
+    )
+
+    # results
+
+    result_sc = fields.Binary('Result Screenshot')
+    qualification_status = fields.Selection(
+        [('semi_qualified', 'Semi Qualified'), ('fully_qualified', 'Fully Qualified'),
+         ('both_qualified_in_single_window', 'Both Qualified in Single Window')], string='Qualification Status')
+
+    #placements
+
+    placement_company_name = fields.Char('Company Name')
+    placement_job_position = fields.Char('Job Position')
+    placement_starting_salary = fields.Float('Starting Salary')
+    placement_joining_date = fields.Date('Joining Date')
+
     @api.model
     def _get_default_image(self):
         image_path = get_module_resource('hr', 'static/src/img', 'default_image.png')
@@ -192,7 +256,6 @@ class LogicStudents(models.Model):
         return res
 
     def link_partner(self):
-
         ss = self.env['res.partner'].search([])
         if not self.stud_id:
             raise UserError('Student do not match')
@@ -271,14 +334,10 @@ class ClassRoomallocateStudent(models.TransientModel):
         return {'domain': {
             'student_ids': [('batch_id', '=', self.batch_id.id), ('id', 'not in', already_allocated_stud_ids)]}}
 
-        # return [('id','not in',already_allocated_stud_ids),('batch_id','=',self.batch_id.id)]
-
     student_ids = fields.Many2many('logic.students', string="Students", copy=True)
-    # admission_ids = fields.Many2many('res.admission', string="Admision")
     class_id = fields.Many2one('logic.base.class', string="Class", readonly=True)
 
     def action_allocation(self):
-
         for student in self.student_ids:
             student_line = self.env['student.base.lines'].create({
                 'class_base_id': self.class_id.id,
@@ -391,3 +450,14 @@ class BringBuddyStudentAttendance(models.Model):
     stud_id = fields.Integer()
     bring_std_id = fields.Many2one('logic.students', string="Student", ondelete='cascade')
     date = fields.Date('Date')
+
+
+class StudentsFacultyClubDatas(models.Model):
+    _name = 'students.faculty.club.data'
+    _description = 'Students Faculty Club Data'
+
+    sfc_start_time = fields.Datetime('Start Time')
+    sfc_end_time = fields.Datetime('End Time')
+    sfc_topic = fields.Char('Topic')
+    sfc_duration = fields.Float('Duration')
+    sfc_id = fields.Many2one('logic.students', string="Student", ondelete='cascade')

@@ -7,7 +7,6 @@ from datetime import date, timezone
 
 # from dateutil.relativedelta import relativedelta
 
-
 class ClassMaster(models.Model):
     _name = 'logic.base.class'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -41,7 +40,7 @@ class ClassMaster(models.Model):
     balance = fields.Float(string='Pending Fee', compute='_compute_balance', store=True)
     batch_check_id = fields.Integer(string="Batch Check", compute='_compute_batch_id', store=True)
     admission_count = fields.Integer(string="Student Count", compute='_compute_student_count', readonly="1")
-    allocated_studs_count_display = fields.Char(string="Allocated Students",compute="_compute_allocated_studs_count_display")
+    allocated_studs_count_display = fields.Char(string="Allocated Students", compute="_compute_allocated_studs_count_display")
     
     @api.depends('line_base_ids')
     def _compute_allocated_studs_count_display(self):
