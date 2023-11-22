@@ -176,6 +176,15 @@ class LogicStudents(models.Model):
     placement_starting_salary = fields.Float('Starting Salary')
     placement_joining_date = fields.Date('Joining Date')
 
+    # FPP
+
+    day_one_fpp = fields.Date('Day 1')
+    fpp_present_one = fields.Selection([('present', 'Present'), ('absent', 'Absent')], 'Attendance')
+    day_two_fpp = fields.Date('Day 2')
+    fpp_present_two = fields.Selection([('present', 'Present'), ('absent', 'Absent')], 'Attendance')
+    fpp_certificate = fields.Boolean('FPP Certificate')
+
+
     @api.model
     def _get_default_image(self):
         image_path = get_module_resource('hr', 'static/src/img', 'default_image.png')

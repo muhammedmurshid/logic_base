@@ -122,7 +122,7 @@
 
                     </group>
                     <notebook>
-                        <page string="Private Information" name="information">
+                        <page string="Information" name="information">
                             <group>
                                 <group string="Private Contact">
                                     <label for="street" string="Address"/>
@@ -331,6 +331,24 @@
                                     <field name="placement_job_position"/>
                                     <field name="placement_starting_salary"/>
                                     <field name="placement_joining_date"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="FPP" name="fpp">
+                            <group>
+                                <group>
+                                    <label for="day_one_fpp"/>
+                                    <div class="o_row">
+                                        <field name="day_one_fpp"/>
+                                        <field name="fpp_present_one"/>
+                                    </div>
+                                    <label for="day_two_fpp"/>
+                                    <div class="o_row">
+                                        <field name="day_two_fpp"/>
+                                        <field name="fpp_present_two"/>
+                                    </div>
+                                    <field name="fpp_certificate"/>
                                 </group>
                             </group>
                         </page>
