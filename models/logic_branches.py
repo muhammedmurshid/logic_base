@@ -8,6 +8,8 @@ class LogicBranches(models.Model):
     _rec_name = 'branch_name'
 
     branch_name = fields.Char()
+    branch_head = fields.Many2one('res.users', string='Branch Head')
+    added_date = fields.Date(string='Added Date', default=fields.Date.today())
 
     def _compute_display_name(self):
         for record in self:

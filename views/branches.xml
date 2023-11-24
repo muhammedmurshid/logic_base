@@ -5,11 +5,13 @@
         <field name="model">logic.base.branches</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="One to One Meeting">
+            <form string="Branch">
                 <sheet>
                     <group>
                         <group>
-                            <field name="branch_name"/>
+
+                            <field name="branch_name" placeholder="Branch name"/>
+                            <field name="branch_head"/>
                         </group>
                     </group>
                 </sheet>
@@ -26,7 +28,9 @@
         <field name="model">logic.base.branches</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="added_date"/>
                 <field name="branch_name"/>
+                <field name="branch_head"/>
             </tree>
 
         </field>
