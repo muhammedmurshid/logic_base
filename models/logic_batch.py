@@ -30,6 +30,7 @@ class LogicBaseBathes(models.Model):
                               ('accounts', 'Accounts Approval'),
                               ('done', 'Done'),
                               ('cancel', 'Cancelled')], default='draft', string="Status")
+    academic_year = fields.Char(string="Academic Year")
     academic_coordinator = fields.Many2one('res.users', string="Academic Coordinator")
     batch_window = fields.Selection(
         [('january', 'January'), ('february', 'February'), ('march', 'March'), ('april', 'April'), ('may', 'May'),

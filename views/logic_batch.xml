@@ -124,6 +124,7 @@
                                    default_focus="1" required="1"/>
 
                         </h1>
+                        <field name="academic_year" placeholder="Academic Year" style="width:300px;"/>
                     </div>
                     <div>
                         <group>

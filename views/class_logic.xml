@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!--    <record id="class_report_view_pivot" model="ir.ui.view">-->
-    <!--        <field name="name">class.count.report.pivot</field>-->
-    <!--        <field name="model">res.base.class</field>-->
-    <!--        <field name="priority">60</field>-->
-    <!--        <field name="arch" type="xml">-->
-    <!--            <pivot string="class Analysis" sample="1">-->
-    <!--                <field name="create_date" interval="month" type="col"/>-->
-    <!--                <field name="batch_id" type="row"/>-->
-    <!--                &lt;!&ndash;                    <field name="admission_fee" type="measure"/>&ndash;&gt;-->
-    <!--            </pivot>-->
-    <!--        </field>-->
-    <!--    </record>-->
     <record id="class_master_tree" model="ir.ui.view">
         <field name="name">res.class.tree</field>
         <field name="model">logic.base.class</field>

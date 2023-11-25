@@ -9,7 +9,6 @@
                 <sheet>
                     <group>
                         <group>
-
                             <field name="branch_name" placeholder="Branch name"/>
                             <field name="branch_head"/>
                         </group>
