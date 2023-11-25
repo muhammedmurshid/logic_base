@@ -22,7 +22,7 @@ class LogicStudents(models.Model):
                             copy=False, default=lambda self: 'Adv/')
     student_id = fields.Char(string='Student ID')
     joining_date = fields.Date(string='Joining Date')
-
+    admission_officer = fields.Many2one('res.users', string='Admission Officer')
     aadhar_number = fields.Char(string='Aadhar Number')
     parent_name = fields.Char(string='Parent Name')
     father_name = fields.Char(string='Father Name')

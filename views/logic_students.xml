@@ -163,6 +163,11 @@
                                     <field name="student_id"/>
                                 </group>
 
+                                <group string="Admission">
+                                    <field name="admission_officer"/>
+
+                                </group>
+
                             </group>
 
                         </page>

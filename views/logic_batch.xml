@@ -122,7 +122,6 @@
                         <h1 class="d-flex flex-row justify-content-between">
                             <field name="name" class="o_task_name text-truncate" placeholder="Batch Name..."
                                    default_focus="1" required="1"/>
-
                         </h1>
                         <field name="academic_year" placeholder="Academic Year" style="width:300px;"/>
                     </div>
