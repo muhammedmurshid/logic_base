@@ -66,6 +66,8 @@ access_student_head,access_details,model_logic_students,academic_head_logic_base
 access_student,access_details,model_logic_students,base.group_user,0,1,1,0
 access_batch_others,access_details,model_logic_students,logic_base_batch_others,1,0,0,0
 access_base_students_program_coordinator,access_course,model_logic_students,logic_base.program_coordinator_logic_base,1,0,0,0
+access_student_leads,access_details,model_logic_students,leads.leads_basic_user,1,1,1,1
+
 
 
 

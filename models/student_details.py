@@ -16,13 +16,11 @@ class LogicStudents(models.Model):
     email = fields.Char(string='Email address')
     phone_number = fields.Char(string='Mobile No')
     whatsapp_no = fields.Char(string="Whatsapp No")
-    admission_fee = fields.Float(string='Admission fee')
     admission_no = fields.Char(string="Admission No")
     reference = fields.Char(string="Reference", readonly=True,
                             copy=False, default=lambda self: 'Adv/')
     student_id = fields.Char(string='Student ID')
     joining_date = fields.Date(string='Joining Date')
-    admission_officer = fields.Many2one('res.users', string='Admission Officer')
     aadhar_number = fields.Char(string='Aadhar Number')
     parent_name = fields.Char(string='Parent Name')
     father_name = fields.Char(string='Father Name')
@@ -184,6 +182,20 @@ class LogicStudents(models.Model):
     fpp_present_two = fields.Selection([('present', 'Present'), ('absent', 'Absent')], 'Attendance')
     fpp_certificate = fields.Boolean('FPP Certificate')
 
+    # admission status
+    admission_officer = fields.Many2one('res.users', string='Admission Officer')
+    admission_fee = fields.Float('Admission Fee')
+    pending_amount = fields.Char('Pending Amount')
+    adm_fee_due_amount = fields.Float('Due Amount')
+    paid_amount = fields.Float('Paid Amount')
+
+    currency_id = fields.Many2one('res.currency', string='Currency', default=lambda self: self.env.user.company_id.currency_id)
+
+    # course fee details
+    course_fee = fields.Float('Course Fee')
+    paid_course_fee = fields.Float('Paid Course Fee')
+    course_due_amount = fields.Float('Due Course Fee')
+    course_pending_amount = fields.Char('Pending Course Fee')
 
     @api.model
     def _get_default_image(self):
@@ -206,17 +218,16 @@ class LogicStudents(models.Model):
 
     def action_open_admission_custom(self):
         print("ooooooooooooooooooo")
-        ff = self.env['res.admission'].search([])
-        # for i in ff:
-        #     print(i.admission_id)
+        ff = self.env['admission.fee.collection'].search([])
+
         for i in self:
             return {
                 'type': 'ir.actions.act_window',
                 'name': 'Admission',
-                'res_model': 'res.admission',
+                'res_model': 'admission.fee.collection',
                 'view_mode': 'tree,form',
                 'target': 'current',
-                'domain': [('crm_lead_id', '=', i.stud_id)],
+                'domain': [('name.id', '=', i.id)],
                 # 'domain' : 'admission_id'= self.partner_id
             }
 

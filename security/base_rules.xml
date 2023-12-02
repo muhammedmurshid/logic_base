@@ -17,6 +17,13 @@
             </field>
             <field name="groups" eval="[(4, ref('logic_base.coordinator_logic_base'))]"/>
         </record>
+        <record model="ir.rule" id="lead_user_access_for_lead_user">
+            <field name="name">Lead User Student access</field>
+            <field name="model_id" ref="model_logic_students"/>
+            <field name="domain_force">[('admission_officer.id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('leads.leads_basic_user'))]"/>
+        </record>
         <record model="ir.rule" id="logic_base_coordinator_rules_batches">
             <field name="name">Base Academic Coordinator Batch view</field>
             <field name="model_id" ref="model_logic_base_batch"/>

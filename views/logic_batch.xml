@@ -100,7 +100,8 @@
                             type="object" groups="logic_base.accounts_logic_base"/>
                     <button name="action_cancel" string="Cancel" type="object"
                             attrs="{'invisible': [('state','in', ['done','cancel','draft'])]}"/>
-                    <button name="action_direct_done" states="draft" groups="logic_base.admin_logic_base" type="object" class="oe_highlight" string="Done"/>
+                    <button name="action_direct_done" states="draft" groups="logic_base.admin_logic_base" type="object"
+                            class="oe_highlight" string="Done"/>
                     <!--                    <button name="action_allocation" string="Student Allocation" class="btn-primary" states="active"-->
                     <!--                            type="object"/>-->
                     <field name="state" widget="statusbar"/>
@@ -169,15 +170,21 @@
                         </page>
                         <page string="Fee Details" attrs="{'invisible': [('state', 'in', ['draft','cancel'])]}">
                             <group>
-                                <group>
+                                <group string="Admission Fee">
                                     <field name="currency_id" invisible="1"/>
-                                    <field name="course_fee" widget="monetary"/>
                                     <field name="admission_fee" widget="monetary"/>
                                     <field name="tax_id"/>
+                                    <field name="price_tax"/>
+
+                                    <field name="price_subtotal"/>
+                                    <field name="price_total" style="color:green;"/>
                                 </group>
-                                <group>
+                                <group string="Course Fee">
+                                    <field name="course_fee" widget="monetary"/>
+
                                     <field name="admission_plus_course_fee" invisible="1"/>
-                                    <field name="tax_amount" invisible="1"/>
+                                    <field name="tax_amount"/>
+
                                     <field name="batch_fee" widget="monetary"/>
                                 </group>
                             </group>

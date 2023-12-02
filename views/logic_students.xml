@@ -164,7 +164,29 @@
                                 </group>
 
                                 <group string="Admission">
+                                    <field name="currency_id" invisible="1"/>
                                     <field name="admission_officer"/>
+                                    <label for="admission_fee"/>
+
+                                    <div class="o_row">
+                                        <field name="admission_fee" widget="monetary"/>
+                                        <field name="pending_amount" style="color:green;" readonly="1"/>
+                                    </div>
+                                    <field name="paid_amount" widget="monetary"/>
+                                    <field name="adm_fee_due_amount" widget="monetary" invisible="1"/>
+
+                                </group>
+
+                                <group string="Course Fee Details">
+                                    <field name="currency_id" invisible="1"/>
+                                    <label for="course_fee"/>
+
+                                    <div class="o_row">
+                                        <field name="course_fee" widget="monetary"/>
+                                        <field name="course_pending_amount" style="color:green;" readonly="1"/>
+                                    </div>
+                                    <field name="paid_course_fee" widget="monetary"/>
+                                    <field name="course_due_amount" widget="monetary" invisible="1"/>
 
                                 </group>
 

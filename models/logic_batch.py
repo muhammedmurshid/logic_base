@@ -11,7 +11,6 @@ class LogicBaseBathes(models.Model):
     _description = 'Batch'
 
     active = fields.Boolean(default=True)
-
     name = fields.Char(string="Batch Name", index=True, required=1)
     code = fields.Char(string="Batch Code", index=True)
     product_id = fields.Many2one('product.product', string="Product", index=True)
@@ -136,7 +135,6 @@ class LogicBaseBathes(models.Model):
             i.created_id = self.env.user.id
 
     def manager_approve(self):
-
         if not self.course_fee:
             raise UserError(_("Please Enter Course Fee"))
         if not self.admission_fee:
@@ -151,7 +149,7 @@ class LogicBaseBathes(models.Model):
         users = self.env.ref('logic_base.accounts_logic_base').users
         for user in users:
             self.activity_schedule('logic_base.mail_for_logic_base_batches', user_id=user.id,
-                                note=f'Batch is created Please check details and approve.')
+                                   note=f'Batch is created Please check details and approve.')
 
     admission_plus_course_fee = fields.Float(string="Admission + Course Fee",
                                              compute='_compute_admission_plus_course_fee', store=True)
@@ -175,11 +173,29 @@ class LogicBaseBathes(models.Model):
     batch_fee = fields.Float(string="Batch Fee", compute='_compute_batch_fee', store=True)
     currency_id = fields.Many2one('res.currency', string='Currency', required=True,
                                   default=lambda self: self.env.user.company_id.currency_id)
+    price_tax = fields.Float(string='Taxes', readonly=True, compute='_compute_amount')
+    price_total = fields.Float(string='Total', readonly=True, compute='_compute_amount')
+    price_subtotal = fields.Float(string='Subtotal', readonly=True, compute='_compute_amount')
 
-    @api.depends('course_fee', 'admission_fee', 'tax_amount', 'admission_plus_course_fee')
+    @api.depends('course_fee', 'admission_fee', 'tax_amount', 'admission_plus_course_fee', 'tax_id')
     def _compute_batch_fee(self):
         for i in self:
             i.batch_fee = i.tax_amount + i.admission_plus_course_fee
+
+    @api.depends('admission_fee', 'tax_id')
+    def _compute_amount(self):
+        """
+        Compute the amounts of the SO line.
+        """
+        for line in self:
+            price = line.admission_fee * (1 - (0.0) / 100.0)
+            taxes = line.tax_id.compute_all(price, line.currency_id)
+            line.update({
+                'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])),
+                'price_total': taxes['total_included'],
+                'price_subtotal': taxes['total_excluded'],
+            })
+
 
     def accounts_approve(self):
         activity_id = self.env['mail.activity'].search(
