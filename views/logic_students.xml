@@ -7,11 +7,11 @@
         <field name="arch" type="xml">
             <form string="Students">
                 <header>
-                    <field name="status" widget="statusbar"/>
-                    <button name="link_partner" string="Link Partner" attrs="{'invisible':[('status', '=','linked')]}"
-                            type="object" class="oe_highlight"/>
-                    <button name="return_draft" string="Return" attrs="{'invisible':[('status', '=','draft')]}"
-                            type="object"/>
+<!--                    <field name="status" widget="statusbar"/>-->
+<!--                    <button name="link_partner" string="Link Partner" attrs="{'invisible':[('status', '=','linked')]}"-->
+<!--                            type="object" class="oe_highlight"/>-->
+<!--                    <button name="return_draft" string="Return" attrs="{'invisible':[('status', '=','draft')]}"-->
+<!--                            type="object"/>-->
 
                 </header>
                 <sheet>
@@ -72,19 +72,19 @@
                                 class="oe_stat_button"
                                 disabled="1">
                             <div role="img" class="fa fa-fw fa-circle text-success o_button_icon"
-                                 attrs="{'invisible': [('current_status', '!=', True)]}" aria-label="Available"
+                                 attrs="{'invisible': [('active', '!=', True)]}" aria-label="Available"
                                  title="Available"/>
                             <div role="img" class="fa fa-fw fa-circle text-danger o_button_icon"
-                                 attrs="{'invisible': [('current_status', '!=', False)]}"
+                                 attrs="{'invisible': [('active', '!=', False)]}"
                                  aria-label="Not available" title="Not available"/>
-                            <div class="o_stat_info" attrs="{'invisible': [('current_status', '=', True)]}">
+                            <div class="o_stat_info" attrs="{'invisible': [('active', '=', True)]}">
 
                                 <span class="o_stat_text">
                                     Inactive
                                 </span>
                                 <field name="inactive_date" widget="statinfo" string=" "/>
                             </div>
-                            <div class="o_stat_info" attrs="{'invisible': [('current_status', '=', False)]}">
+                            <div class="o_stat_info" attrs="{'invisible': [('active', '=', False)]}">
                                 <span class="o_stat_text">
                                     Active
                                 </span>
@@ -97,8 +97,8 @@
                             <field name="reference" class="oe_inline" readonly="1"/>
                         </h2>
                     </div>
-                    <widget name="web_ribbon" title="Discontinued" bg_color="bg-danger"
-                            attrs="{'invisible': [('status', 'in', ['draft','linked']), ('active', '=', True)]}"/>
+<!--                    <widget name="web_ribbon" title="Discontinued" bg_color="bg-danger"-->
+<!--                            attrs="{'invisible': [('status', 'in', ['draft','linked']), ('active', '=', True)]}"/>-->
                     <field name="image_field" widget='image' class="oe_avatar"
                            options='{"zoom": true, "preview_image":"image_field"}'/>
 
@@ -148,9 +148,6 @@
                                     <field name="dob"/>
                                     <field name="gender"/>
                                     <field name="aadhar_number"/>
-                                </group>
-                                <group string="Current Status">
-                                    <field name="current_status"/>
                                 </group>
                                 <group string="Education">
                                     <field name="course_studied"/>
@@ -399,10 +396,10 @@
                 <field name="name"/>
                 <field name="id"/>
                 <field name="email"/>
-                <field name="status"/>
+<!--                <field name="status"/>-->
                 <field name="batch_id"/>
                 <field name="mode_of_study"/>
-                <field name="current_status"/>
+                <field name="active"/>
                 <field name="image_field"/>
                 <templates>
                     <t t-name="kanban-box">
@@ -461,8 +458,8 @@
                 <field name="admission_no"/>
                 <field name="email"/>
                 <field name="phone_number"/>
-                <field name="status" widget="badge" decoration-danger="status == 'discontinue'"
-                       decoration-info="status == 'draft'" decoration-success="status == 'linked'"/>
+<!--                <field name="status" widget="badge" decoration-danger="status == 'discontinue'"-->
+<!--                       decoration-info="status == 'draft'" decoration-success="status == 'linked'"/>-->
             </tree>
 
         </field>

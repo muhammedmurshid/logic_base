@@ -36,8 +36,7 @@ class LogicStudents(models.Model):
     street2 = fields.Char()
     zip = fields.Char()
     city = fields.Char()
-    current_status = fields.Boolean(string='Active', default=True,
-                                    help="If this student is discontinued disable this field", widget='active_circle')
+
     upaya_std_ids = fields.One2many('students.attendance.upaya', 'upaya_std_id')
     bring_buddy_attendance_ids = fields.One2many('bring.buddy.students.attendance', 'bring_std_id')
     yes_plus_att_ids = fields.One2many('students.attendance.yes_plus', 'yes_attendance_id')
@@ -47,8 +46,8 @@ class LogicStudents(models.Model):
     stud_id = fields.Integer()
     batch_id = fields.Many2one('logic.base.batch', string='Batch',
                                domain=['&', ('state', '=', 'done'), ('active_state', '=', 'active')])
-    status = fields.Selection([('draft', 'Draft'), ('linked', 'Linked'), ('discontinue', 'Discontinued')],
-                              default='draft', string='Status', tracking=True)
+    # status = fields.Selection([('draft', 'Draft'), ('linked', 'Linked'), ('discontinue', 'Discontinued')],
+    #                           default='draft', string='Status', tracking=True)
     related_partner = fields.Many2one('res.partner', string='Related Partner')
     class_id = fields.Integer(string='Class')
     adm_id = fields.Integer(string='Admission ID')
@@ -275,22 +274,22 @@ class LogicStudents(models.Model):
         res = super(LogicStudents, self).action_admission(vals)
         return res
 
-    def link_partner(self):
-        ss = self.env['res.partner'].search([])
-        if not self.stud_id:
-            raise UserError('Student do not match')
-
-        for i in ss:
-            print(self.stud_id, 'stud')
-            print(i.part_id, 'paar')
-            if i.part_id == self.stud_id:
-                print('ya')
-                i.related_student = self.id
-                self.student_id = i.reference
-                self.related_partner = i.id
-                self.status = 'linked'
-            else:
-                print('ll')
+    # def link_partner(self):
+    #     ss = self.env['res.partner'].search([])
+    #     if not self.stud_id:
+    #         raise UserError('Student do not match')
+    #
+    #     for i in ss:
+    #         print(self.stud_id, 'stud')
+    #         print(i.part_id, 'paar')
+    #         if i.part_id == self.stud_id:
+    #             print('ya')
+    #             i.related_student = self.id
+    #             self.student_id = i.reference
+    #             self.related_partner = i.id
+    #             self.status = 'linked'
+    #         else:
+    #             print('ll')
         # else:
         #     raise UserError('Students do not match')
 
@@ -315,19 +314,19 @@ class LogicStudents(models.Model):
             'context': {'search_default_class_id': 1}
         }
 
-    def return_draft(self):
-        self.status = 'draft'
+    # def return_draft(self):
+    #     self.status = 'draft'
 
-    @api.onchange('current_status')
-    def _compute_current_student_status(self):
-        for rec in self:
-            if rec.current_status == False:
-                rec.status = 'discontinue'
-                inactive_date = fields.Date.today()
-                rec.inactive_date = str(inactive_date)
-                print(rec.inactive_date, 'inactive_date')
-            else:
-                rec.status = 'draft'
+    # @api.onchange('active')
+    # def _compute_current_student_status(self):
+    #     for rec in self:
+    #         if rec.active == False:
+    #             rec.status = 'discontinue'
+    #             inactive_date = fields.Date.today()
+    #             rec.inactive_date = str(inactive_date)
+    #             print(rec.inactive_date, 'inactive_date')
+    #         else:
+    #             rec.status = 'draft'
 
     inactive_date = fields.Char(string='Inactive Date')
 
