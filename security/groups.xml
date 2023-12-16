@@ -38,6 +38,10 @@
             <field name="name">Others</field>
             <field name="category_id" ref="module_logic_base_groups"/>
         </record>
+        <record id="logic_base_super_coordinator" model="res.groups">
+            <field name="name">Super Coordinator</field>
+            <field name="category_id" ref="module_logic_base_groups"/>
+        </record>
 
     </data>
 </odoo>

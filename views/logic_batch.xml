@@ -70,13 +70,14 @@
                 <field name="product_id" invisible="1"/>
                 <field name="company_id" invisible="1"/>
                 <field name="branch_id"/>
+                <field name="academic_coordinator"/>
                 <!--                 <field name="b_nm"/> -->
                 <!--                 <field name="location"/> -->
                 <field name="tot_seats"/>
                 <field name="available_seats"/>
                 <field name="product_id" invisible="1"/>
                 <field name="course_id"/>
-                <field name="created_id"/>
+                <field name="create_uid" string="Created By"/>
                 <field name="approve_date"/>
                 <field name="state" widget="badge" decoration-success="state == 'done'"
                        decoration-primary="state == 'marketing'" decoration-danger="state == 'cancel'"
@@ -139,7 +140,7 @@
                                 <field name="code"/>
                                 <field name="product_id" invisible="1"/>
                                 <field name="course_id"/>
-                                <field name="created_id"/>
+                                <field name="created_id" invisible="1"/>
                                 <field name="create_date"/>
                                 <field name="approve_date"/>
                             </group>
