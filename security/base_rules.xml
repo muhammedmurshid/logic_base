@@ -24,14 +24,14 @@
             </field>
             <field name="groups" eval="[(4, ref('leads.leads_basic_user'))]"/>
         </record>
-<!--        <record model="ir.rule" id="logic_base_coordinator_rules_batches">-->
-<!--            <field name="name">Base Academic Coordinator Batch view</field>-->
-<!--            <field name="model_id" ref="model_logic_base_batch"/>-->
-<!--            <field name="domain_force">['|',('academic_coordinator.id','=', user.id),-->
-<!--                ('create_uid.id', '=', user.id)]-->
-<!--            </field>-->
-<!--            <field name="groups" eval="[(4, ref('logic_base.coordinator_logic_base'))]"/>-->
-<!--        </record>-->
+        <record model="ir.rule" id="logic_base_coordinator_rules_batches">
+            <field name="name">Base Academic Coordinator Batch view</field>
+            <field name="model_id" ref="model_logic_base_batch"/>
+            <field name="domain_force">['|',('academic_coordinator.id','=', user.id),
+                ('create_uid.id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('logic_base.coordinator_logic_base'))]"/>
+        </record>
         <record model="ir.rule" id="logic_base_heads_rules_batches">
             <field name="name">Base Academic Heads Batch view</field>
             <field name="model_id" ref="model_logic_base_batch"/>
