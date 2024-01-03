@@ -95,6 +95,16 @@ class LogicStudents(models.Model):
     day_four_cip = fields.Date('Date')
     day_four_cip_attendance = fields.Selection(
         [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')], 'Attendance')
+    day_five_cip = fields.Date('Date')
+    day_five_cip_attendance = fields.Selection(
+
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')], 'Attendance')
+    day_six_cip = fields.Date('Date')
+    day_six_cip_attendance = fields.Selection(
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')], 'Attendance')
+    day_seven_cip = fields.Date('Date')
+    day_seven_cip_attendance = fields.Selection(
+        [('full_day', 'Full Day'), ('half_day', 'Half Day'), ('absent', 'Absent')], 'Attendance')
 
     # students Bank details
     bank_name = fields.Char('Bank Name')
@@ -346,6 +356,7 @@ class ClassRoomallocateStudent(models.TransientModel):
 
     @api.onchange('batch_id')
     def get_students_domain(self):
+        print(self.batch_id, 'batch')
         already_allocated_stud_ids = []
         for class_id in self.batch_id.class_ids:
             for stud_line in class_id.line_base_ids:
@@ -353,7 +364,19 @@ class ClassRoomallocateStudent(models.TransientModel):
         return {'domain': {
             'student_ids': [('batch_id', '=', self.batch_id.id), ('id', 'not in', already_allocated_stud_ids)]}}
 
-    student_ids = fields.Many2many('logic.students', string="Students", copy=True)
+    # @api.depends('batch_id')
+    # def get_current_batch_students(self):
+    #     print('work')
+    #     students = self.env['logic.students'].sudo().search([('batch_id', '=', self.batch_id.id)])
+    #     std = []
+    #     for stud in students:
+    #         print(stud.id, 'student ids')
+    #         std.append(stud.id)
+    #     print(std, 'std')
+    #     domain = [('id', 'in', std)]
+    #     return {'domain': {'student_ids': domain}}
+
+    student_ids = fields.Many2many('logic.students', string="Students")
     class_id = fields.Many2one('logic.base.class', string="Class", readonly=True)
 
     def action_allocation(self):

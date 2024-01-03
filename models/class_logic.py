@@ -104,7 +104,7 @@ class ClassMaster(models.Model):
 
     def action_allocation(self):
         print('te')
-        crm = self.env['classroom.allocate.student'].search([('class_id', '=', self.id)])
+        crm = self.env['classroom.allocate.student'].sudo().search([('class_id', '=', self.id)])
         return {
             'name': _('Allocation'),
             'view_mode': 'form',

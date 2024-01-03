@@ -56,5 +56,14 @@
             </field>
             <field name="groups" eval="[(4, ref('logic_base.coordinator_logic_base'))]"/>
         </record>
+
+        <record model="ir.rule" id="logic_base_admission_officers_rules_students">
+            <field name="name">Base students admission officers rule</field>
+            <field name="model_id" ref="model_logic_students"/>
+            <field name="domain_force">['|',
+                ('create_uid.id', '=', user.id), ('admission_officer.id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('logic_base.logic_base_batch_others'))]"/>
+        </record>
     </data>
 </odoo>

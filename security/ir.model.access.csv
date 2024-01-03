@@ -30,7 +30,6 @@ access_course_papers_admin,access_course,model_course_papers,admin_logic_base,1,
 access_base_course_papers_program_coordinator,access_course,model_course_papers,logic_base.program_coordinator_logic_base,1,0,0,0
 access_base_course_papers_super_coordinator,access_course,model_course_papers,logic_base.logic_base_super_coordinator,1,1,1,1
 
-
 access_course_levels,access_course,model_course_levels,base.group_user,1,0,0,0
 access_course_levels_coo,access_course,model_course_levels,coordinator_logic_base,1,1,1,1
 access_course_levels_marketing,access_course,model_course_levels,marketing_manager_logic_base,1,1,1,1
