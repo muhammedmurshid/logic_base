@@ -20,6 +20,7 @@ class LogicStudents(models.Model):
     reference = fields.Char(string="Reference", readonly=True,
                             copy=False, default=lambda self: 'Adv/')
     student_id = fields.Char(string='Student ID')
+    erp_student_id = fields.Integer(string='ERP Student ID', placeholder='ERP Student ID')
     joining_date = fields.Date(string='Joining Date')
     aadhar_number = fields.Char(string='Aadhar Number')
     parent_name = fields.Char(string='Parent Name')

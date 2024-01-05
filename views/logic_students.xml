@@ -7,11 +7,11 @@
         <field name="arch" type="xml">
             <form string="Students">
                 <header>
-<!--                    <field name="status" widget="statusbar"/>-->
-<!--                    <button name="link_partner" string="Link Partner" attrs="{'invisible':[('status', '=','linked')]}"-->
-<!--                            type="object" class="oe_highlight"/>-->
-<!--                    <button name="return_draft" string="Return" attrs="{'invisible':[('status', '=','draft')]}"-->
-<!--                            type="object"/>-->
+                    <!--                    <field name="status" widget="statusbar"/>-->
+                    <!--                    <button name="link_partner" string="Link Partner" attrs="{'invisible':[('status', '=','linked')]}"-->
+                    <!--                            type="object" class="oe_highlight"/>-->
+                    <!--                    <button name="return_draft" string="Return" attrs="{'invisible':[('status', '=','draft')]}"-->
+                    <!--                            type="object"/>-->
 
                 </header>
                 <sheet>
@@ -97,8 +97,8 @@
                             <field name="reference" class="oe_inline" readonly="1"/>
                         </h2>
                     </div>
-<!--                    <widget name="web_ribbon" title="Discontinued" bg_color="bg-danger"-->
-<!--                            attrs="{'invisible': [('status', 'in', ['draft','linked']), ('active', '=', True)]}"/>-->
+                    <!--                    <widget name="web_ribbon" title="Discontinued" bg_color="bg-danger"-->
+                    <!--                            attrs="{'invisible': [('status', 'in', ['draft','linked']), ('active', '=', True)]}"/>-->
                     <field name="image_field" widget='image' class="oe_avatar"
                            options='{"zoom": true, "preview_image":"image_field"}'/>
 
@@ -157,9 +157,24 @@
                                     <field name="related_partner"/>
                                     <field name="joining_date"/>
                                     <field name="admission_no"/>
-                                    <field name="student_id"/>
+                                    <field name="student_id" invisible="1"/>
+                                    <field name="erp_student_id"/>
                                 </group>
 
+
+                                <group string="Bank Details">
+                                    <field name="bank_name"/>
+                                    <field name="ifsc_code"/>
+                                    <field name="account_number"/>
+                                    <field name="branch"/>
+                                    <field name="holder_name"/>
+                                </group>
+
+                            </group>
+
+                        </page>
+                        <page string="Fee Details" name="bank_details">
+                            <group>
                                 <group string="Admission">
                                     <field name="currency_id" invisible="1"/>
                                     <field name="admission_officer"/>
@@ -185,19 +200,6 @@
                                     <field name="paid_course_fee" widget="monetary"/>
                                     <field name="course_due_amount" widget="monetary" invisible="1"/>
 
-                                </group>
-
-                            </group>
-
-                        </page>
-                        <page string="Bank Details" name="bank_details">
-                            <group>
-                                <group>
-                                    <field name="bank_name"/>
-                                    <field name="ifsc_code"/>
-                                    <field name="account_number"/>
-                                    <field name="branch"/>
-                                    <field name="holder_name"/>
                                 </group>
                             </group>
 
@@ -408,7 +410,7 @@
                 <field name="name"/>
                 <field name="id"/>
                 <field name="email"/>
-<!--                <field name="status"/>-->
+                <!--                <field name="status"/>-->
                 <field name="batch_id"/>
                 <field name="mode_of_study"/>
                 <field name="active"/>
@@ -470,8 +472,8 @@
                 <field name="admission_no"/>
                 <field name="email"/>
                 <field name="phone_number"/>
-<!--                <field name="status" widget="badge" decoration-danger="status == 'discontinue'"-->
-<!--                       decoration-info="status == 'draft'" decoration-success="status == 'linked'"/>-->
+                <!--                <field name="status" widget="badge" decoration-danger="status == 'discontinue'"-->
+                <!--                       decoration-info="status == 'draft'" decoration-success="status == 'linked'"/>-->
             </tree>
 
         </field>
