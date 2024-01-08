@@ -37,7 +37,6 @@ class LogicStudents(models.Model):
     street2 = fields.Char()
     zip = fields.Char()
     city = fields.Char()
-
     upaya_std_ids = fields.One2many('students.attendance.upaya', 'upaya_std_id')
     bring_buddy_attendance_ids = fields.One2many('bring.buddy.students.attendance', 'bring_std_id')
     yes_plus_att_ids = fields.One2many('students.attendance.yes_plus', 'yes_attendance_id')
@@ -206,6 +205,11 @@ class LogicStudents(models.Model):
     paid_course_fee = fields.Float('Paid Course Fee')
     course_due_amount = fields.Float('Due Course Fee')
     course_pending_amount = fields.Char('Pending Course Fee')
+
+    #ancillary_fee
+
+    ancillary_fee_ids = fields.One2many('ancillary.fee.report.base', 'ancillary_student_id')
+
 
     @api.model
     def _get_default_image(self):
