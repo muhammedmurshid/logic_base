@@ -159,6 +159,7 @@
                                     <field name="admission_no"/>
                                     <field name="student_id" invisible="1"/>
                                     <field name="erp_student_id"/>
+                                    <field name="lead_id" groups="base.group_no_one"/>
                                 </group>
 
 
@@ -177,6 +178,7 @@
                             <group>
                                 <group string="Admission">
                                     <field name="currency_id" invisible="1"/>
+                                    <field name="admission_date"/>
                                     <field name="admission_officer"/>
                                     <label for="admission_fee"/>
 
@@ -185,7 +187,7 @@
                                         <field name="pending_amount" style="color:green;" readonly="1"/>
                                     </div>
                                     <field name="paid_amount" widget="monetary"/>
-                                    <field name="adm_fee_due_amount" widget="monetary" invisible="1"/>
+                                    <field name="adm_fee_due_amount" widget="monetary" groups="base.group_no_one"/>
 
                                 </group>
 
@@ -198,7 +200,7 @@
                                         <field name="course_pending_amount" style="color:green;" readonly="1"/>
                                     </div>
                                     <field name="paid_course_fee" widget="monetary"/>
-                                    <field name="course_due_amount" widget="monetary" invisible="1"/>
+                                    <field name="course_due_amount" widget="monetary" groups="base.group_no_one"/>
 
                                 </group>
                                 <group string="Ancillary Fee Details">
@@ -207,6 +209,15 @@
                                             <field name="fee_type"/>
                                             <field name="amount" widget="monetary"/>
                                             <field name="currency_id" invisible="1"/>
+                                            <!--                                    <field name="coordinator_id"/>-->
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group string="Admission Details">
+                                    <field name="std_adm_detail_ids">
+                                        <tree editable="bottom">
+                                            <field name="batch_id"/>
+                                            <field name="course_id"/>
                                             <!--                                    <field name="coordinator_id"/>-->
                                         </tree>
                                     </field>

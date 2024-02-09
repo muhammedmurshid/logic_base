@@ -26,6 +26,7 @@ class LogicStudents(models.Model):
     parent_name = fields.Char(string='Parent Name')
     father_name = fields.Char(string='Father Name')
     father_number = fields.Char(string='Father Number')
+    lead_id = fields.Integer(string='Lead')
     mother_name = fields.Char(string='Mother Name')
     mother_number = fields.Char(string='Mother Number')
     parent_whatsapp = fields.Char(string='Parent Whatsapp')
@@ -176,7 +177,7 @@ class LogicStudents(models.Model):
         [('semi_qualified', 'Semi Qualified'), ('fully_qualified', 'Fully Qualified'),
          ('both_qualified_in_single_window', 'Both Qualified in Single Window')], string='Qualification Status')
 
-    #placements
+    # placements
 
     placement_company_name = fields.Char('Company Name')
     placement_job_position = fields.Char('Job Position')
@@ -193,28 +194,45 @@ class LogicStudents(models.Model):
 
     # admission status
     admission_officer = fields.Many2one('res.users', string='Admission Officer')
+    admission_date = fields.Date('Admission Date')
     admission_fee = fields.Float('Admission Fee')
     pending_amount = fields.Char('Pending Amount')
     adm_fee_due_amount = fields.Float('Due Amount')
     paid_amount = fields.Float('Paid Amount')
 
-    currency_id = fields.Many2one('res.currency', string='Currency', default=lambda self: self.env.user.company_id.currency_id)
+    currency_id = fields.Many2one('res.currency', string='Currency',
+                                  default=lambda self: self.env.user.company_id.currency_id)
 
     # course fee details
     course_fee = fields.Float('Course Fee')
     paid_course_fee = fields.Float('Paid Course Fee')
     course_due_amount = fields.Float('Due Course Fee')
-    course_pending_amount = fields.Char('Pending Course Fee')
+    course_pending_amount = fields.Char('Pending Course Fee', compute='onchange_course_fee_pending_amount', store=True)
 
-    #ancillary_fee
+    # ancillary_fee
 
     ancillary_fee_ids = fields.One2many('ancillary.fee.report.base', 'ancillary_student_id')
 
+    # Admission Details
+    std_adm_detail_ids = fields.One2many('logic.student.admission.details', 'std_detail_id', string='Admission Details')
 
     @api.model
     def _get_default_image(self):
         image_path = get_module_resource('hr', 'static/src/img', 'default_image.png')
         return base64.b64encode(open(image_path, 'rb').read())
+
+    @api.onchange('admission_fee','paid_amount','adm_fee_due_amount')
+    def onchange_admission_fee_pending_amount(self):
+        print(self.admission_fee, 'adm fee')
+        self.adm_fee_due_amount = self.admission_fee - self.paid_amount
+        self.pending_amount = ' ' + ':' + ' ' + str(
+            self.adm_fee_due_amount) + ' ' + 'Pending'
+
+    @api.depends('course_fee', 'paid_course_fee', 'course_due_amount')
+    def onchange_course_fee_pending_amount(self):
+        self.course_due_amount = self.course_fee - self.paid_course_fee
+        self.update({'course_pending_amount': ' ' + ':' + ' ' + str(
+            self.course_due_amount) + ' ' + 'Pending'})
 
     def _compute_image(self):
         for student in self:
@@ -305,8 +323,8 @@ class LogicStudents(models.Model):
     #             self.status = 'linked'
     #         else:
     #             print('ll')
-        # else:
-        #     raise UserError('Students do not match')
+    # else:
+    #     raise UserError('Students do not match')
 
     def action_open_exam_results(self):
         return {
@@ -508,3 +526,11 @@ class StudentsFacultyClubDatas(models.Model):
     sfc_topic = fields.Char('Topic')
     sfc_duration = fields.Float('Duration')
     sfc_id = fields.Many2one('logic.students', string="Student", ondelete='cascade')
+
+
+class StudentAdmissionDetails(models.Model):
+    _name = 'logic.student.admission.details'
+
+    batch_id = fields.Many2one('logic.base.batch', string="Batch")
+    course_id = fields.Many2one('logic.base.courses', string="Course")
+    std_detail_id = fields.Many2one('logic.students', string="Student", ondelete='cascade')

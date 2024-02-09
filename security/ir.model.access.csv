@@ -72,3 +72,6 @@ access_student_leads,access_details,model_logic_students,leads.leads_basic_user,
 access_super_coordinator_leads,access_details,model_logic_students,logic_base.logic_base_super_coordinator,1,1,1,1
 
 access_ancillary_fee_report,access_details,model_ancillary_fee_report_base,,1,1,1,1
+
+access_student_admission_details,access_details,model_logic_student_admission_details,,1,1,1,1
+

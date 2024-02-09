@@ -174,19 +174,19 @@
                                 <group string="Admission Fee">
                                     <field name="currency_id" invisible="1"/>
                                     <field name="admission_fee" widget="monetary"/>
-                                    <field name="tax_id"/>
-                                    <field name="price_tax"/>
+                                    <field name="tax_id" groups="base.group_no_one"/>
+                                    <field name="price_tax" groups="base.group_no_one"/>
 
-                                    <field name="price_subtotal"/>
-                                    <field name="price_total" style="color:green;"/>
+                                    <field name="price_subtotal" groups="base.group_no_one"/>
+                                    <field name="price_total" style="color:green;" groups="base.group_no_one"/>
                                 </group>
                                 <group string="Course Fee">
                                     <field name="course_fee" widget="monetary"/>
 
                                     <field name="admission_plus_course_fee" invisible="1"/>
-                                    <field name="tax_amount"/>
+                                    <field name="tax_amount" groups="base.group_no_one"/>
 
-                                    <field name="batch_fee" widget="monetary"/>
+                                    <field name="batch_fee" widget="monetary" groups="base.group_no_one"/>
                                 </group>
                             </group>
                         </page>
