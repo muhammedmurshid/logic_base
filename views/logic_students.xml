@@ -436,7 +436,7 @@
             <kanban class="o_hr_employee_kanban" js_class="hr_employee_kanban" sample="1">
                 <field name="name"/>
                 <field name="id"/>
-                <field name="email"/>
+                <field name="email" string="Email Address"/>
                 <!--                <field name="status"/>-->
                 <field name="batch_id"/>
                 <field name="mode_of_study"/>
