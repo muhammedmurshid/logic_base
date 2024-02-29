@@ -33,7 +33,7 @@ class LogicStudents(models.Model):
     parent_email = fields.Char(string="Parent Email")
     course_studied = fields.Char(string='Course Studied')
     last_institute_studied = fields.Char(string='Last Institute Studied')
-    mode_of_study = fields.Selection([('online', 'Online'), ('offline', 'Offline')], string='Mode of Study')
+    mode_of_study = fields.Selection([('online', 'Online'), ('offline', 'Offline'), ('nil', 'Nil')], string='Mode of Study')
     street = fields.Char()
     street2 = fields.Char()
     zip = fields.Char()
@@ -304,8 +304,7 @@ class LogicStudents(models.Model):
             'country_id': self.country_id.id,
 
         })
-        res = super(LogicStudents, self).action_admission(vals)
-        return res
+
 
     # def link_partner(self):
     #     ss = self.env['res.partner'].search([])
@@ -533,4 +532,8 @@ class StudentAdmissionDetails(models.Model):
 
     batch_id = fields.Many2one('logic.base.batch', string="Batch")
     course_id = fields.Many2one('logic.base.courses', string="Course")
+    branch_id = fields.Many2one('logic.base.branches', string="Branch")
+    course_level_id = fields.Many2one('course.levels', string="Course Level")
+    course_group_id = fields.Many2one('course.groups', string="Course Group")
+    course_papers_ids = fields.Many2many('course.papers', string="Course Papers")
     std_detail_id = fields.Many2one('logic.students', string="Student", ondelete='cascade')

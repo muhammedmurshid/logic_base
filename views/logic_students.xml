@@ -218,6 +218,10 @@
                                         <tree editable="bottom">
                                             <field name="batch_id"/>
                                             <field name="course_id"/>
+                                            <field name="branch_id"/>
+                                            <field name="course_level_id"/>
+                                            <field name="course_group_id"/>
+                                            <field name="course_papers_ids" widget="many2many_tags"/>
                                             <!--                                    <field name="coordinator_id"/>-->
                                         </tree>
                                     </field>
