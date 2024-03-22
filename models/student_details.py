@@ -10,7 +10,7 @@ class LogicStudents(models.Model):
     _description = 'Student Profile'
 
     active = fields.Boolean(default=True)
-    name = fields.Char(string='StudentName', copy=False, required=True)
+    name = fields.Char(string='Student Name', copy=False, required=True)
     dob = fields.Date(string="Date of Birth")
     gender = fields.Selection(selection=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], string="Gender")
     email = fields.Char(string='Email Address')
