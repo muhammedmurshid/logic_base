@@ -29,7 +29,7 @@ class LogicBaseBathes(models.Model):
                               ('accounts', 'Accounts Approval'),
                               ('done', 'Done'),
                               ('cancel', 'Cancelled')], default='draft', string="Status")
-    academic_year = fields.Char(string="Academic Year")
+    academic_year = fields.Char(string="Academic Year", required=1)
     academic_coordinator = fields.Many2one('res.users', string="Academic Coordinator")
     batch_window = fields.Selection(
         [('january', 'January'), ('february', 'February'), ('march', 'March'), ('april', 'April'), ('may', 'May'),
@@ -102,11 +102,9 @@ class LogicBaseBathes(models.Model):
     def get_batch_manager(self):
         print('kkkll')
         user_crnt = self.env.user.id
-
         res_user = self.env['res.users'].search([('id', '=', self.env.user.id)])
         if res_user.has_group('logic_base.manager_batch'):
             self.make_visible_manager_batch = False
-
         else:
             self.make_visible_manager_batch = True
 
