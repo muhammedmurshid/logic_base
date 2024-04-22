@@ -230,9 +230,10 @@ class LogicStudents(models.Model):
 
     @api.depends('course_fee', 'paid_course_fee', 'course_due_amount')
     def onchange_course_fee_pending_amount(self):
-        self.course_due_amount = self.course_fee - self.paid_course_fee
-        self.update({'course_pending_amount': ' ' + ':' + ' ' + str(
-            self.course_due_amount) + ' ' + 'Pending'})
+        for rec in self:
+            rec.course_due_amount = rec.course_fee - rec.paid_course_fee
+            rec.update({'course_pending_amount': ' ' + ':' + ' ' + str(
+                rec.course_due_amount) + ' ' + 'Pending'})
 
     def _compute_image(self):
         for student in self:

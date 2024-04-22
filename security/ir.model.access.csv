@@ -22,6 +22,7 @@ access_courses_head,access_course,model_logic_base_courses,academic_head_logic_b
 access_courses_base,access_course,model_logic_base_courses,base.group_user,1,0,0,0
 access_base_courses_program_coordinator,access_course,model_logic_base_courses,logic_base.program_coordinator_logic_base,1,0,0,0
 access_base_courses_super_coordinator,access_course,model_logic_base_courses,logic_base.logic_base_super_coordinator,1,1,1,1
+access_courses_others,access_courses_others,model_logic_base_courses,logic_base.logic_base_batch_others,1,0,0,0
 
 access_course_papers,access_course,model_course_papers,base.group_user,1,0,0,0
 access_course_papers_coo,access_course,model_course_papers,coordinator_logic_base,1,1,1,1

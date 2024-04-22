@@ -38,7 +38,6 @@ class LogicBaseBathes(models.Model):
     from_date = fields.Date(string="Start Date")
     course_id = fields.Many2one('logic.base.courses', string="Course")
     to_date = fields.Date(string="End Date")
-    class_id = fields.Many2one('res.class', string="class")
     class_ids = fields.One2many("logic.base.class", "batch_id", string="Classes")
     adm_id = fields.Many2one('res.admission', string="Admission")
     message_ids = fields.One2many('mail.message', 'res_id', string="Messages")
