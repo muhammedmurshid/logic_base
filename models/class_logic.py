@@ -27,7 +27,7 @@ class ClassMaster(models.Model):
         ('active', 'Active')], default='draft')
     start_date = fields.Date(string="Start Date")
     end_date = fields.Date(string="End Date")
-    coordinator_id = fields.Many2one('res.users', string="Academic Coordinator", default=lambda self: self.env.user.id)
+    coordinator_id = fields.Many2one('res.users', string="Academic Coordinator")
     approve_id = fields.Many2one('res.users', string="Approved By", default=lambda self: self.env.user.id, readonly="1",
                                  tracking=True)
     tutor_id = fields.Many2one('res.users', string="Faculty",domain=[('faculty_check','=',True)])
@@ -42,6 +42,11 @@ class ClassMaster(models.Model):
     admission_count = fields.Integer(string="Student Count", compute='_compute_student_count', readonly="1")
     allocated_studs_count_display = fields.Char(string="Allocated Students", compute="_compute_allocated_studs_count_display")
     
+    @api.onchange('batch_id')
+    def _onchange_batch_id(self):
+        if self.batch_id:
+            self.coordinator_id = self.batch_id.academic_coordinator.id
+
     @api.depends('line_base_ids')
     def _compute_allocated_studs_count_display(self):
         for record in self:

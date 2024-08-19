@@ -33,7 +33,8 @@ class LogicStudents(models.Model):
     parent_email = fields.Char(string="Parent Email")
     course_studied = fields.Char(string='Course Studied')
     last_institute_studied = fields.Char(string='Last Institute Studied')
-    mode_of_study = fields.Selection([('online', 'Online'), ('offline', 'Offline'), ('nil', 'Nil')], string='Mode of Study')
+    mode_of_study = fields.Selection([('online', 'Online'), ('offline', 'Offline'), ('nil', 'Nil')],
+                                     string='Mode of Study')
     street = fields.Char()
     street2 = fields.Char()
     zip = fields.Char()
@@ -49,6 +50,8 @@ class LogicStudents(models.Model):
                                domain=['&', ('state', '=', 'done'), ('active_state', '=', 'active')])
     # status = fields.Selection([('draft', 'Draft'), ('linked', 'Linked'), ('discontinue', 'Discontinued')],
     #                           default='draft', string='Status', tracking=True)
+    status = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirm'), ('done', 'Done'), ('cancel', 'Cancelled')], default='draft',
+                              string='Status', tracking=True)
     related_partner = fields.Many2one('res.partner', string='Related Partner')
     class_id = fields.Integer(string='Class')
     adm_id = fields.Integer(string='Admission ID')
@@ -221,7 +224,7 @@ class LogicStudents(models.Model):
         image_path = get_module_resource('hr', 'static/src/img', 'default_image.png')
         return base64.b64encode(open(image_path, 'rb').read())
 
-    @api.onchange('admission_fee','paid_amount','adm_fee_due_amount')
+    @api.onchange('admission_fee', 'paid_amount', 'adm_fee_due_amount')
     def onchange_admission_fee_pending_amount(self):
         print(self.admission_fee, 'adm fee')
         self.adm_fee_due_amount = self.admission_fee - self.paid_amount
@@ -240,6 +243,25 @@ class LogicStudents(models.Model):
             # We have to be in sudo to have access to the images
             student_id = self.sudo().env['logic.students'].browse(student.id)
             student.image_field = student_id.image_field
+
+    def action_student_confirm(self):
+        self.sudo().write({
+            'status': 'confirm'
+        }
+        )
+
+    def action_student_done(self):
+        self.sudo().write({
+            'status': 'done'
+        }
+        )
+
+    def action_student_cancellation(self):
+        self.sudo().write({
+            'status': 'cancel',
+            'active': False
+        }
+        )
 
     @api.model
     def create(self, vals):
@@ -305,7 +327,6 @@ class LogicStudents(models.Model):
             'country_id': self.country_id.id,
 
         })
-
 
     # def link_partner(self):
     #     ss = self.env['res.partner'].search([])
@@ -385,9 +406,9 @@ class ClassRoomallocateStudent(models.TransientModel):
             for stud_line in class_id.line_base_ids:
                 already_allocated_stud_ids.append(stud_line.student_id.id)
         return {'domain': {
-            'student_ids': [('batch_id', '=', self.batch_id.id), ('id', 'not in', already_allocated_stud_ids)]}}
+            'student_ids': [('batch_id', '=', self.batch_id.id), ('id', 'not in', already_allocated_stud_ids), ('status', '=', 'done')]}}
 
-    # @api.depends('batch_id')
+    # @api.depends('batch_id')  
     # def get_current_batch_students(self):
     #     print('work')
     #     students = self.env['logic.students'].sudo().search([('batch_id', '=', self.batch_id.id)])

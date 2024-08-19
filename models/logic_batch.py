@@ -221,17 +221,17 @@ class LogicBaseBathes(models.Model):
         # for i in admission_ids:
         #     print(len(i.batch_id), 'count')
 
-    @api.depends('tot_seats')
-    def _compute_seats(self):
-        for i in self:
-            count = self.env['res.admission'].sudo().search_count([('batch_id', '=', i.id), ('state', '=', 'confirm')])
-            # if count:
-            #     i.admission_count = count
-            if i.tot_seats:
-                i.available_seats = i.tot_seats - count
-            if i.available_seats < 0:
-                raise ValidationError(
-                    _("This Batch is Already Filled"))
+    # @api.depends('tot_seats')
+    # def _compute_seats(self):
+    #     for i in self:
+    #         count = self.env['res.admission'].sudo().search_count([('batch_id', '=', i.id), ('state', '=', 'confirm')])
+    #         # if count:
+    #         #     i.admission_count = count
+    #         if i.tot_seats:
+    #             i.available_seats = i.tot_seats - count
+    #         if i.available_seats < 0:
+    #             raise ValidationError(
+    #                 _("This Batch is Already Filled"))
 
     def action_class_view(self):
         ss = self.env['logic.base.class'].search([('batch_id.id', '=', self.id)])

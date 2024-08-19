@@ -7,7 +7,14 @@
         <field name="arch" type="xml">
             <form string="Students">
                 <header>
-                    <!--                    <field name="status" widget="statusbar"/>-->
+                    <field name="status" widget="statusbar"/>
+                    <button name="action_student_confirm" type="object" class="oe_highlight" string="Confirm"
+                            attrs="{'invisible':[('status', '!=', 'draft')]}"/>
+                    <button name="action_student_done" type="object" class="oe_highlight" string="Done"
+                            attrs="{'invisible':[('status', '!=', 'confirm')]}"/>
+                    <button name="action_student_cancellation" type="object" string="Cancel"
+                            attrs="{'invisible':[('status', 'in', ['draft','cancel'])]}"/>
+
                     <!--                    <button name="link_partner" string="Link Partner" attrs="{'invisible':[('status', '=','linked')]}"-->
                     <!--                            type="object" class="oe_highlight"/>-->
                     <!--                    <button name="return_draft" string="Return" attrs="{'invisible':[('status', '=','draft')]}"-->
@@ -499,6 +506,10 @@
                 <field name="admission_no"/>
                 <field name="email"/>
                 <field name="phone_number"/>
+                <field name="batch_id"/>
+                <field name="status" widget="badge" decoration-success="status == 'done'"
+                       decoration-info="status == 'draft'"
+                       decoration-primary="status == 'confirm'"/>
                 <!--                <field name="status" widget="badge" decoration-danger="status == 'discontinue'"-->
                 <!--                       decoration-info="status == 'draft'" decoration-success="status == 'linked'"/>-->
             </tree>
